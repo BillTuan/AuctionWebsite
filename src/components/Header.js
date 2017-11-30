@@ -58,6 +58,11 @@ class Header extends Component {
                   <Button as="a">Sign up</Button>
                 </Link>
               </Menu.Item>
+              <Menu.Item>
+                <Link to="/profile/1">
+                  <Button as="a">Profile</Button>
+                </Link>
+              </Menu.Item>
             </Menu.Menu>
           </Container>
         </Menu>

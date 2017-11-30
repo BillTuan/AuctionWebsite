@@ -1,17 +1,21 @@
 import React, { Component } from "react";
-import { Container, Segment, Grid, Menu, Divider } from "semantic-ui-react";
-
-
-const ProfileDetail = () =>{
-    return()
-}
+import {
+  Container,
+  Segment,
+  Grid,
+  Menu,
+  Divider,
+  Button,
+  Form
+} from "semantic-ui-react";
+import { ContentList } from "./contentlist";
 
 class Profile extends Component {
-  state = { activeItem: "Profile detail" };
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  state = { activeItem: "Profile", currentContent: ContentList.Profile };
+  handleItemClick = (e, { name }) =>
+    this.setState({ activeItem: name, currentContent: ContentList[name] });
   render() {
-    const { activeItem } = this.state;
+    const { activeItem, currentContent } = this.state;
     return (
       <Container>
         <Grid>
@@ -49,13 +53,7 @@ class Profile extends Component {
               </Menu.Item>
             </Menu>
           </Grid.Column>
-
-          <Grid.Column stretched width={12}>
-            <Segment>
-              This is an stretched grid column. This segment will always match
-              the tab height
-            </Segment>
-          </Grid.Column>
+          {currentContent}
         </Grid>
       </Container>
     );
