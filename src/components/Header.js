@@ -54,7 +54,9 @@ class Header extends Component {
                 </Link>
               </Menu.Item>
               <Menu.Item>
-                <Button as="a">Sign up</Button>
+                <Link to="/signup">
+                  <Button as="a">Sign up</Button>
+                </Link>
               </Menu.Item>
             </Menu.Menu>
           </Container>

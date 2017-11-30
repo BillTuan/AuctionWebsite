@@ -7,6 +7,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Home from "./Home";
 import Login from "./Login";
+import Signup from "./Signup";
 import Product from "./Product";
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
         <div>
           <Header />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
           <Route exact path="/" component={Home} />
           <Route path="/product/:id" component={Product} />
           <Footer />

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   Form,
@@ -8,8 +9,8 @@ import {
   Message,
   Segment
 } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-class Login extends Component {
+
+class Signup extends Component {
   state = {};
   render() {
     return (
@@ -32,7 +33,7 @@ class Login extends Component {
                 src="http://brandmark.io/logo-rank/random/apple.png"
                 style={{ marginRight: "1.5em", width: 35, height: 35 }}
               />{" "}
-              Log-in to your account
+              Create new account
             </Header>
             <Form size="large">
               <Segment stacked>
@@ -49,14 +50,21 @@ class Login extends Component {
                   placeholder="Password"
                   type="password"
                 />
+                <Form.Input
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="Confirm password"
+                  type="password"
+                />
 
                 <Button color="teal" fluid size="large">
-                  Login
+                  Sign up
                 </Button>
               </Segment>
             </Form>
             <Message>
-              New to us? <Link to="/signup">Sign up</Link>
+              If you are a member. Let's <Link to="/login">Login</Link>
             </Message>
           </Grid.Column>
         </Grid>
@@ -65,4 +73,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Signup;
