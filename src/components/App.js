@@ -9,7 +9,7 @@ import Home from "./Home";
 import Login from "./Login";
 import Signup from "./Signup";
 import Product from "./Product";
-
+import Profile from "./Profile";
 class App extends Component {
   render() {
     return (
@@ -20,6 +20,7 @@ class App extends Component {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/" component={Home} />
           <Route path="/product/:id" component={Product} />
+          <Route path="/profile/:username" component={Profile} />>
           <Footer />
         </div>
       </BrowserRouter>
