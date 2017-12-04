@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Segment,
-  Grid,
-  Menu,
-  Divider,
-  Button,
-  Form
-} from "semantic-ui-react";
+import { Container, Grid, Menu, Button, Form } from "semantic-ui-react";
 import { ContentList } from "./contentlist";
 
 class Profile extends Component {
