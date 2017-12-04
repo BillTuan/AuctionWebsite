@@ -29,24 +29,10 @@ class Header extends Component {
             <Menu.Item as="a" active>
               <Link to="/">Home</Link>
             </Menu.Item>
+            <Menu.Item as="a">
+              <Link to="/listing">List product</Link>
+            </Menu.Item>
 
-            <Dropdown item simple text="Dropdown">
-              <Dropdown.Menu>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Header>Header Item</Dropdown.Header>
-                <Dropdown.Item>
-                  <i className="dropdown icon" />
-                  <span className="text">Submenu</span>
-                  <Dropdown.Menu>
-                    <Dropdown.Item>List Item</Dropdown.Item>
-                    <Dropdown.Item>List Item</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
             <Menu.Menu position="right">
               <Menu.Item>
                 <Link to="/login">
