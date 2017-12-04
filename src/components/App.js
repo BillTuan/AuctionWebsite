@@ -7,9 +7,11 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Home from "./Home";
 import Login from "./Login";
-import Signup from "./Signup";
 import Product from "./Product";
+import Listing from "./Listing";
 import Profile from "./Profile";
+import Signup from "./Signup";
+
 class App extends Component {
   render() {
     return (
@@ -17,10 +19,11 @@ class App extends Component {
         <div>
           <Header />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
           <Route exact path="/" component={Home} />
-          <Route path="/product/:id" component={Product} />
-          <Route path="/profile/:username" component={Profile} />>
+          <Route exact path="/product/:id" component={Product} />
+          <Route exact path="/listing" component={Listing} />
+          <Route exact path="/profile/:username" component={Profile} />
+          <Route exact path="/signup" component={Signup} />
           <Footer />
         </div>
       </BrowserRouter>

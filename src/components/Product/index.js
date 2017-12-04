@@ -27,16 +27,16 @@ const data = {
         Water-resistant to 30 M (99 feet)`,
   images: [
     {
-      original: "http://lorempixel.com/1000/600/nature/1/",
-      thumbnail: "http://lorempixel.com/250/150/nature/1/"
+      original: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png",
+      thumbnail: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png"
     },
     {
-      original: "http://lorempixel.com/1000/600/nature/2/",
-      thumbnail: "http://lorempixel.com/250/150/nature/2/"
+      original: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png",
+      thumbnail: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png"
     },
     {
-      original: "http://lorempixel.com/1000/600/nature/3/",
-      thumbnail: "http://lorempixel.com/250/150/nature/3/"
+      original: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png",
+      thumbnail: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png"
     }
   ]
 };
