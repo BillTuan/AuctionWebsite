@@ -19,15 +19,14 @@ class Header extends Component {
         <Menu inverted pointing color="teal">
           <Container>
             <Menu.Item as="a" header>
-              <Image
-                size="mini"
-                src="http://brandmark.io/logo-rank/random/apple.png"
-                style={{ marginRight: "1.5em", width: 30, height: 30 }}
-              />
-              Odun Auction
-            </Menu.Item>
-            <Menu.Item as="a" active>
-              <Link to="/">Home</Link>
+              <Link to="/">
+                <Image
+                  size="mini"
+                  src="http://brandmark.io/logo-rank/random/apple.png"
+                  style={{ marginRight: "1.5em", width: 30, height: 30 }}
+                />
+                Odun Auction
+              </Link>
             </Menu.Item>
             <Menu.Item as="a">
               <Link to="/listing">List product</Link>

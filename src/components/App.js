@@ -11,20 +11,80 @@ import Product from "./Product";
 import Listing from "./Listing";
 import Profile from "./Profile";
 import Signup from "./Signup";
+import Admin from "./Admin";
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <div>
-          <Header />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/product/:id" component={Product} />
-          <Route exact path="/listing" component={Listing} />
-          <Route exact path="/profile/:username" component={Profile} />
-          <Route exact path="/signup" component={Signup} />
-          <Footer />
+          <Route
+            exact
+            path="/login"
+            render={() => (
+              <div>
+                <Header />
+                <Login />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div>
+                <Header />
+                <Home />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/product/:id"
+            render={() => (
+              <div>
+                <Header />
+                <Product />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/listing"
+            render={() => (
+              <div>
+                <Header />
+                <Listing />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/profile/:username"
+            render={() => (
+              <div>
+                <Header />
+                <Profile />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={() => (
+              <div>
+                <Header />
+                <Signup />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route exact path="/admin" component={Admin} />
         </div>
       </BrowserRouter>
     );
