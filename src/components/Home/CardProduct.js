@@ -2,18 +2,21 @@ import React, { Component } from "react";
 import { Card, Image, Icon, Segment, Label, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import Timer from "../Product/Timer";
 
 class CardProduct extends Component {
-  state = {
-    time: moment().format("LTS"),
-    buttonColor: "orange"
-  };
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({ time: moment().format("LTS") });
-    }, 1000);
-  }
+  state = { buttonColor: "orange" };
   render() {
+    const {
+      id,
+      name,
+      description,
+      bid_price,
+      start_time,
+      end_time
+    } = this.props.product;
+    const duration = moment(end_time).valueOf() - moment(start_time).valueOf();
+    const linkProduct = `/product/${id}`;
     return (
       <Card>
         <Label
@@ -22,7 +25,7 @@ class CardProduct extends Component {
           ribbon="right"
           style={{ marginLeft: -13, width: 280 }}
         >
-          {this.state.time}
+          <Timer duration={duration} />
         </Label>
         <Image src="https://i.pinimg.com/736x/54/4f/13/544f13dd463f73b5e954e8d0ff279a4f--anime-couples-avatar.jpg" />
 
@@ -33,25 +36,24 @@ class CardProduct extends Component {
             tag
             style={{ width: 150, marginLeft: -5, marginBottom: 10 }}
           >
-            Start price: $55
+            Start price: ${bid_price}
           </Label>
-          <Card.Header>Matthew</Card.Header>
+          <Card.Header>{name}</Card.Header>
           <Card.Meta>
             <span className="date">Current price: $30</span>
           </Card.Meta>
-          <Card.Description>
-            Matthew is a musician living in Nashville.
-          </Card.Description>
+          <Card.Description>{description}</Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Link to="/product/1">
+          <Link to={linkProduct}>
             <Button
               color={this.state.buttonColor}
               onMouseEnter={() => this.setState({ buttonColor: "green" })}
               onMouseLeave={() =>
                 this.setState({
                   buttonColor: "orange"
-                })}
+                })
+              }
             >
               SUBMIT A BID
             </Button>

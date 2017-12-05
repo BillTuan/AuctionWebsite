@@ -13,8 +13,10 @@ import {
 } from "semantic-ui-react";
 import Slideshow from "./Slideshow";
 import moment from "moment";
-import NumericInput from "react-numeric-input";
+import Timer from "./Timer";
 import { setInterval } from "core-js/library/web/timers";
+import InputPrice from "./InputPrice";
+import MenuInfo from "./MenuInfo";
 
 const data = {
   name: "SWATCH WOMEN’S QUARTZ RAINBOW DIAL PLASTIC WATCH AUCTION",
@@ -41,78 +43,7 @@ const data = {
   ]
 };
 
-const InputPrice = props => {
-  return (
-    <NumericInput
-      value={props.value}
-      precision={2}
-      size={6}
-      step={0.1}
-      mobile={false}
-      style={{
-        wrap: {
-          background: "#E2E2E2",
-          boxShadow: "0 0 1px 1px #fff inset, 1px 1px 5px -1px #000",
-          padding: "2px 2.26ex 2px 2px",
-          borderRadius: "6px 3px 3px 6px",
-          fontSize: 32
-        },
-        input: {
-          borderRadius: "4px 2px 2px 4px",
-          color: "#988869",
-          padding: "0.1ex 1ex",
-          border: "1px solid #ccc",
-          marginRight: 4,
-          display: "block",
-          fontWeight: 100
-        },
-        "input:focus": {
-          border: "1px inset #69C",
-          outline: "none"
-        },
-        arrowUp: {
-          borderBottomColor: "rgba(66, 54, 0, 0.63)"
-        },
-        arrowDown: {
-          borderTopColor: "rgba(66, 54, 0, 0.63)"
-        }
-      }}
-    />
-  );
-};
-const panes = [
-  {
-    menuItem: { key: "details", icon: "info", content: "Description" },
-    render: () => <Tab.Pane>Tab 1 Content</Tab.Pane>
-  },
-  {
-    menuItem: (
-      <Menu.Item key="auction">
-        Auction History<Label>15</Label>
-      </Menu.Item>
-    ),
-    render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>
-  },
-  {
-    menuItem: (
-      <Menu.Item key="review">
-        Reviews<Label>8</Label>
-      </Menu.Item>
-    ),
-    render: () => <Tab.Pane>Tab 1 Content</Tab.Pane>
-  }
-];
-
-const MenuInfo = () => <Tab panes={panes} />;
-
 class Product extends Component {
-  state = { time: moment().format("LTS") };
-
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({ time: moment().format("LTS") });
-    }, 1000);
-  }
   render() {
     return (
       <Container>
@@ -137,14 +68,50 @@ class Product extends Component {
                 </Grid>
                 <Divider section />
                 {/* Information */}
-                <div>Details: {data.des}</div>
-                <div>End at: {data.time}</div>
-                <div>Time left {this.state.time}</div>
-                <div>Current bid: ${data.currentBid}</div>
-                <InputPrice value={data.currentBid} />
-                <Button basic color="red">
-                  Bid
-                </Button>
+                <Label
+                  as="a"
+                  color="teal"
+                  ribbon="left"
+                  style={{ width: 280, fontSize: 18 }}
+                >
+                  General
+                </Label>
+                <p>Details: {data.des}</p>
+                <Label
+                  as="a"
+                  color="teal"
+                  ribbon="left"
+                  style={{ width: 280, fontSize: 18 }}
+                >
+                  End time: {data.time}
+                </Label>
+                <div>
+                  <Timer duration={2 * 86400} />
+                </div>
+
+                <Label
+                  as="a"
+                  color="red"
+                  tag
+                  style={{
+                    width: 150,
+                    marginLeft: -5,
+                    marginBottom: 10,
+                    marginTop: 20,
+                    fontSize: 16
+                  }}
+                >
+                  Current bid: ${data.currentBid}
+                </Label>
+                <div style={{ margin: 10 }}>
+                  <InputPrice value={data.currentBid} />
+                </div>
+
+                <div style={{ margin: 10 }}>
+                  <Button size="large" positive>
+                    Bid
+                  </Button>
+                </div>
               </Segment>
             </Grid.Column>
             {/* RIGHT */}
