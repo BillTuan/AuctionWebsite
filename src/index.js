@@ -8,9 +8,10 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import registerServiceWorker from "./registerServiceWorker";
+import reducers from "./reducer";
 
 const store = createStore(
-  () => {},
+  reducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(thunk, logger)
 );
