@@ -17,7 +17,7 @@ class Home extends Component {
       <Grid.Row>
         {rowProduct.map(product => (
           <Grid.Column style={{ marginLeft: 40 }}>
-            <CardProduct />
+            <CardProduct product={product} />
           </Grid.Column>
         ))}
       </Grid.Row>
