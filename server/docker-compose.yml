@@ -1,0 +1,23 @@
+version: '3'
+services:
+  webapp:
+    build: .
+    volumes:
+    - .:/webapp
+    ports:
+    - 8888:3000
+    container_name: webapp
+    command: sh /webapp/startup.sh
+    links:
+    - db
+    env_file: .env
+    stdin_open: true
+    tty: true
+    environment:
+      - ALLOW_OVERRIDE=true
+  db:
+    image: postgres
+    ports:
+    - 5432:5432
+    container_name: db
+    env_file: .env
