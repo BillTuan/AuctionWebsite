@@ -9,9 +9,9 @@
 # rake db:migrate
 # rake db:seed
 
-User.delete_all
-Category.delete_all
-Product.delete_all
+# User.delete_all
+# Category.delete_all
+# Product.delete_all
 
 category1 = Category.create!(name: 'GIA ĐÌNH & VƯỜN')
 category2 = Category.create!(name: 'DU LỊCH & THỂ THAO')
@@ -21,30 +21,32 @@ category5 = Category.create!(name: 'ĐỒ CHƠI')
 category6 = Category.create!(name: 'Ô TÔ')
 category7 = Category.create!(name: 'XE MÁY')
 category8 = Category.create!(name: 'CÔNG CỤ')
-User.create!(email: 'bossdiemmaimai@gmail.com', password: '123456')
-User.create!(email: 'abc@gmail.com', password: '123456')
-#
-# 10.times do
-#   User.create!(name: FFaker::Name.name,email: FFaker::Internet.free_email,phone: FFaker::PhoneNumber.phone_number,password_digest: '123456')
-# end
 
+u1 = User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+u2 = User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+u3 = User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+u4 = User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 1, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 0, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 2, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 0, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
 
   p1 = Product.create!(name: FFaker::Product.product_name,bid_price: 1000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u1.id, status: 1)
   p2 = Product.create!(name: FFaker::Product.product_name,bid_price: 2000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u2.id, status: 1)
   p3 = Product.create!(name: FFaker::Product.product_name,bid_price: 3000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u3.id, status: 0)
   p4 = Product.create!(name: FFaker::Product.product_name,bid_price: 4000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u4.id, status: 1)
   p5 = Product.create!(name: FFaker::Product.product_name,bid_price: 5000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u4.id, status: 1)
   p6 = Product.create!(name: FFaker::Product.product_name,bid_price: 6000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u3.id, status: 0)
   p7 = Product.create!(name: FFaker::Product.product_name,bid_price: 7000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u2.id, status: 1)
   p8 = Product.create!(name: FFaker::Product.product_name,bid_price: 8000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u1.id, status: 1)
 
   CategoryProduct.create!(category_id: category1.id, product_id: p1.id)
   CategoryProduct.create!(category_id: category1.id, product_id: p2.id)

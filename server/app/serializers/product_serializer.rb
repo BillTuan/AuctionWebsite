@@ -1,11 +1,10 @@
 class ProductSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description,:start_time, :end_time, :bid_price, :bid_jump, :buy_price, :img1,:img2,:img3,:img4,:img5,:img6,:img7,:img8
-  # , :id_category,:name_category
-  #
-  # #belongs_to :category
-  # def id_category
-  #   object.category.id
-  # #   description.truncate(50)
+  attributes :id, :name, :description,:start_time, :end_time,
+   :bid_price, :bid_jump, :buy_price, :img1,:img2,:img3,:img4,:img5,:img6,:img7,:img8
+
+  belongs_to :user, key: :seller, serializer: SellerSerializer
+  # def seller_name
+  #   object.user.name
   # end
   # def name_category
   #   object.category.name

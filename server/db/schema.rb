@@ -46,14 +46,16 @@ ActiveRecord::Schema.define(version: 20171203065440) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.string "img1", default: ""
-    t.string "img2", default: ""
-    t.string "img3", default: ""
-    t.string "img4", default: ""
-    t.string "img5", default: ""
-    t.string "img6", default: ""
-    t.string "img7", default: ""
-    t.string "img8", default: ""
+    t.string "img1", default: "https://i.imgur.com/AcZdR4D.jpg"
+    t.string "img2", default: "https://i.imgur.com/G5RFQwd.jpg"
+    t.string "img3", default: "https://i.imgur.com/lRCoKtC.jpg"
+    t.string "img4", default: "https://i.imgur.com/GoT3FTC.jpg"
+    t.string "img5", default: "https://i.imgur.com/l6tOSEA.png"
+    t.string "img6", default: "https://i.imgur.com/AcZdR4D.jpg"
+    t.string "img7", default: "https://i.imgur.com/J4eXNeX.jpg"
+    t.string "img8", default: "https://i.imgur.com/AcZdR4D.jpg"
+    t.integer "seller_id"
+    t.integer "status", default: 0
     t.integer "bid_price", default: 1000
     t.integer "bid_jump", default: 1000
     t.integer "buy_price", default: 100000
@@ -85,6 +87,8 @@ ActiveRecord::Schema.define(version: 20171203065440) do
     t.string "name"
     t.string "phone"
     t.string "address"
+    t.string "paycard_number", default: "0000000000000000"
+    t.integer "status", default: 1
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
