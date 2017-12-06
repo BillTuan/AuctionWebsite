@@ -13,7 +13,8 @@ class CardProduct extends Component {
       description,
       bid_price,
       start_time,
-      end_time
+      end_time,
+      img1
     } = this.props.product;
     const duration = moment(end_time).valueOf() - moment(start_time).valueOf();
     const linkProduct = `/product/${id}`;
@@ -27,7 +28,7 @@ class CardProduct extends Component {
         >
           <Timer duration={duration} />
         </Label>
-        <Image src="https://i.pinimg.com/736x/54/4f/13/544f13dd463f73b5e954e8d0ff279a4f--anime-couples-avatar.jpg" />
+        <Image src={img1} />
 
         <Card.Content>
           <Label
