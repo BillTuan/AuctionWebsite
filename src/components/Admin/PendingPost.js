@@ -13,8 +13,15 @@ import {
 } from "semantic-ui-react";
 
 import { data } from "./data"; // Data fetch
+
+import { connect } from "react-redux";
+import * as action from "../../action";
 class PendingPost extends Component {
   state = { openApproveConfirm: false, openDenyConfirm: false };
+
+  componentDidMount() {
+    this.props.getListProduct();
+  }
   //Approve---------------------
   showApproveConfirm = () => {
     this.setState({ openApproveConfirm: true });
@@ -48,14 +55,15 @@ class PendingPost extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {data.pendingProduct.map(item => {
+            {this.props.products.map(({ id, name, description, img1 }) => {
               return (
                 <Table.Row>
-                  <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>{item.description}</Table.Cell>
-                  <Table.Cell>{item.userID}</Table.Cell>
+                  <Table.Cell>{name}</Table.Cell>
+                  <Table.Cell>{description}</Table.Cell>
+                  {/* TODO: Fix "id" -> "Seller Id" */}
+                  <Table.Cell>{id}</Table.Cell>
                   <Table.Cell>
-                    <Image src={item.img} size="small" />
+                    <Image src={img1} size="small" />
                   </Table.Cell>
                   <Table.Cell collapsing>
                     {/* Approve confirm */}
@@ -81,9 +89,7 @@ class PendingPost extends Component {
                         <Button
                           negative
                           onClick={() => {
-                            this.setState({
-                              openDenyConfirm: true
-                            });
+                            this.setState({ openDenyConfirm: true });
                           }}
                         >
                           Deny
@@ -129,4 +135,10 @@ class PendingPost extends Component {
   }
 }
 
-export default PendingPost;
+const mapStateToProps = ({ productReducer }) => {
+  return {
+    products: productReducer.products
+  };
+};
+
+export default connect(mapStateToProps, action)(PendingPost);
