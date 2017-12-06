@@ -4,7 +4,7 @@ import { Tab, Menu, Label } from "semantic-ui-react";
 const panes = [
   {
     menuItem: { key: "details", icon: "info", content: "Description" },
-    render: () => <Tab.Pane>Tab 1 Content</Tab.Pane>
+    render: props => <Tab.Pane>{props.description}</Tab.Pane>
   },
   {
     menuItem: (
@@ -24,4 +24,4 @@ const panes = [
   }
 ];
 
-export default () => <Tab panes={panes} />;
+export default props => <Tab panes={panes} {...props} />;

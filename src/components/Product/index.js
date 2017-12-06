@@ -47,8 +47,31 @@ const data = {
 };
 
 class Product extends Component {
+  state = { images: [] };
   componentDidMount() {
     this.props.getProduct(this.props.match.params.id);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.handleImage(newProps);
+  }
+  handleImage(newProps) {
+    const images = [];
+    const { img1, img2, img3, img4, img5, img6, img7, img8 } = newProps.product;
+    // console.log(this.props.product);
+    images.push(
+      { original: img1, thumbnail: img1 },
+      { original: img2, thumbnail: img2 },
+      { original: img3, thumbnail: img3 },
+      { original: img4, thumbnail: img4 },
+      { original: img5, thumbnail: img5 },
+      { original: img6, thumbnail: img6 },
+      { original: img7, thumbnail: img7 },
+      { original: img8, thumbnail: img8 }
+    );
+    this.setState({
+      images: images
+    });
   }
   render() {
     const {
@@ -62,6 +85,8 @@ class Product extends Component {
     } = this.props.product;
     const duration = moment(end_time).valueOf() - moment(start_time).valueOf();
     const endTime = moment(end_time).format("MMMM Do YYYY, h:mm:ss a");
+    console.log("IMAGE", this.state.images);
+
     return (
       <Container>
         <Segment.Group>
@@ -77,12 +102,15 @@ class Product extends Component {
                   <Grid.Column floated="right" width={5}>
                     <Segment circular style={{ width: 120, height: 120 }}>
                       <Header as="h3">
-                        Current Bid
+                        Start from
                         <Header.Subheader>${bid_price}</Header.Subheader>
                       </Header>
                     </Segment>
                   </Grid.Column>
                 </Grid>
+                <Button size="big" color="blue">
+                  BUY NOW: ${buy_price}
+                </Button>
                 <Divider section />
                 {/* Information */}
                 <Label
@@ -93,7 +121,7 @@ class Product extends Component {
                 >
                   General
                 </Label>
-                <p>Details: {description}</p>
+                <p>{description}</p>
                 <Label
                   as="a"
                   color="teal"
@@ -121,7 +149,7 @@ class Product extends Component {
                   Current bid: ${data.currentBid}
                 </Label>
                 <div style={{ margin: 10 }}>
-                  <InputPrice value={data.currentBid} />
+                  <InputPrice value={data.currentBid} step={bid_jump} />
                 </div>
 
                 <div style={{ margin: 10 }}>
@@ -133,14 +161,14 @@ class Product extends Component {
             </Grid.Column>
             {/* RIGHT */}
             <Grid.Column>
-              <Slideshow images={data.images} />
+              <Slideshow images={this.state.images} />
             </Grid.Column>
           </Grid>
         </Segment.Group>
 
         {/* Menu information */}
         <Segment>
-          <MenuInfo />
+          <MenuInfo description={description} />
         </Segment>
       </Container>
     );

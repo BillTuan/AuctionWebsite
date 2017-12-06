@@ -7,7 +7,7 @@ const InputPrice = props => {
       value={props.value}
       precision={2}
       size={6}
-      step={0.1}
+      step={props.step}
       mobile={false}
       style={{
         wrap: {
