@@ -42,7 +42,7 @@ class CardProduct extends Component {
           <Card.Meta>
             <span className="date">Current price: $30</span>
           </Card.Meta>
-          <Card.Description>{description}</Card.Description>
+          <Card.Description>{description.substring(0, 100)}</Card.Description>
         </Card.Content>
         <Card.Content extra>
           <Link to={linkProduct}>
