@@ -3,6 +3,9 @@ import { Segment, Form, Container, Dropdown, Button } from "semantic-ui-react";
 import ImageUploader from "react-images-upload";
 import { Editor } from "@tinymce/tinymce-react";
 
+import { connect } from "react-redux";
+import * as action from "../../action";
+
 const options = [
   { key: "angular", text: "Angular", value: "angular" },
   { key: "css", text: "CSS", value: "css" },
@@ -35,19 +38,40 @@ const bidTime = [
 class Listing extends Component {
   constructor(props) {
     super(props);
-    this.state = { pictures: [] };
+    this.state = { pictures: [], categories: [] };
     this.onDrop = this.onDrop.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getListCategory();
   }
 
   onDrop(picture) {
     this.setState({
       pictures: this.state.pictures.concat(picture)
     });
+    console.log(picture);
   }
 
   handleEditorChange = e => {
     console.log("Content was updated:", e.target.getContent());
   };
+
+  componentWillReceiveProps(nextProps) {
+    this.handleCategory(nextProps);
+  }
+
+  handleCategory(props) {
+    const categories = [];
+    props.categories.map(({ id, name }) => {
+      categories.push({
+        key: id,
+        text: name,
+        value: id
+      });
+    });
+    this.setState({ categories: categories });
+  }
   render() {
     return (
       <Container text>
@@ -64,7 +88,7 @@ class Listing extends Component {
                 fluid
                 multiple
                 selection
-                options={options}
+                options={this.state.categories}
               />
             </Form.Field>
             <Form.Field>
@@ -80,7 +104,6 @@ class Listing extends Component {
             <Form.Field>
               <label>Description</label>
               <Editor
-                initialValue="<p>This is the initial content of the editor</p>"
                 init={{
                   plugins: "link image code",
                   toolbar:
@@ -115,4 +138,10 @@ class Listing extends Component {
   }
 }
 
-export default Listing;
+const mapStateToProps = ({ categoryReducer }) => {
+  return {
+    categories: categoryReducer.categories
+  };
+};
+
+export default connect(mapStateToProps, action)(Listing);
