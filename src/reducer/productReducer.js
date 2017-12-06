@@ -1,7 +1,8 @@
-import { GET_LIST_PRODUCT } from "../action/constants";
+import { GET_LIST_PRODUCT, GET_PRODUCT } from "../action/constants";
 
 const initialState = {
-  products: []
+  products: [],
+  product: {}
 };
 
 export default (state = initialState, action) => {
@@ -11,7 +12,11 @@ export default (state = initialState, action) => {
         ...state,
         products: action.payload
       };
-
+    case GET_PRODUCT:
+      return {
+        ...state,
+        product: action.payload
+      };
     default:
       return state;
   }

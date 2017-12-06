@@ -18,6 +18,9 @@ import { setInterval } from "core-js/library/web/timers";
 import InputPrice from "./InputPrice";
 import MenuInfo from "./MenuInfo";
 
+import { connect } from "react-redux";
+import * as action from "../../action";
+
 const data = {
   name: "SWATCH WOMEN’S QUARTZ RAINBOW DIAL PLASTIC WATCH AUCTION",
   time: "July 30, 2019 12:00 am",
@@ -44,7 +47,21 @@ const data = {
 };
 
 class Product extends Component {
+  componentDidMount() {
+    this.props.getProduct(this.props.match.params.id);
+  }
   render() {
+    const {
+      name,
+      description,
+      start_time,
+      end_time,
+      bid_price,
+      buy_price,
+      bid_jump
+    } = this.props.product;
+    const duration = moment(end_time).valueOf() - moment(start_time).valueOf();
+    const endTime = moment(end_time).format("MMMM Do YYYY, h:mm:ss a");
     return (
       <Container>
         <Segment.Group>
@@ -55,13 +72,13 @@ class Product extends Component {
                 {/* Header */}
                 <Grid>
                   <Grid.Column floated="left" width={10}>
-                    <Header size="large">{data.name}</Header>
+                    <Header size="large">{name}</Header>
                   </Grid.Column>
                   <Grid.Column floated="right" width={5}>
                     <Segment circular style={{ width: 120, height: 120 }}>
                       <Header as="h3">
                         Current Bid
-                        <Header.Subheader>${data.currentBid}</Header.Subheader>
+                        <Header.Subheader>${bid_price}</Header.Subheader>
                       </Header>
                     </Segment>
                   </Grid.Column>
@@ -76,17 +93,17 @@ class Product extends Component {
                 >
                   General
                 </Label>
-                <p>Details: {data.des}</p>
+                <p>Details: {description}</p>
                 <Label
                   as="a"
                   color="teal"
                   ribbon="left"
                   style={{ width: 280, fontSize: 18 }}
                 >
-                  End time: {data.time}
+                  End time: {endTime}
                 </Label>
                 <div>
-                  <Timer duration={2 * 86400} />
+                  {duration === 0 ? null : <Timer duration={duration} />}
                 </div>
 
                 <Label
@@ -129,4 +146,10 @@ class Product extends Component {
     );
   }
 }
-export default Product;
+
+const mapStateToProp = ({ productReducer }) => {
+  return {
+    product: productReducer.product
+  };
+};
+export default connect(mapStateToProp, action)(Product);

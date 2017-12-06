@@ -43,10 +43,10 @@ class App extends Component {
           <Route
             exact
             path="/product/:id"
-            render={() => (
+            render={props => (
               <div>
                 <Header />
-                <Product />
+                <Product {...props} />
                 <Footer />
               </div>
             )}
