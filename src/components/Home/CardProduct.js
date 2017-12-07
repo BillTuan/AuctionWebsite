@@ -5,7 +5,7 @@ import moment from "moment";
 import Timer from "../Product/Timer";
 
 class CardProduct extends Component {
-  state = { buttonColor: "orange" };
+  state = { buttonColor: "orange", like: false };
   render() {
     const {
       id,
@@ -59,6 +59,13 @@ class CardProduct extends Component {
               SUBMIT A BID
             </Button>
           </Link>
+          <Button
+            color={this.state.like ? "red" : "gray"}
+            content="Like"
+            icon="heart"
+            onClick={() => this.setState({ like: true })}
+            floated="right"
+          />
         </Card.Content>
       </Card>
     );
