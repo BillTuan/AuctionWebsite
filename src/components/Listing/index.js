@@ -2,19 +2,11 @@ import React, { Component } from "react";
 import { Segment, Form, Container, Dropdown, Button } from "semantic-ui-react";
 import ImageUploader from "react-firebase-file-uploader";
 import { Editor } from "@tinymce/tinymce-react";
-import firebase from "firebase";
 import { connect } from "react-redux";
 import * as action from "../../action";
 import moment from "moment";
-const config = {
-  apiKey: "AIzaSyCH6R17nAY6ma0Tm3s-ojhyu-e2SlEiFa0",
-  authDomain: "auctionwebsite-f8118.firebaseapp.com",
-  databaseURL: "https://auctionwebsite-f8118.firebaseio.com",
-  projectId: "auctionwebsite-f8118",
-  storageBucket: "auctionwebsite-f8118.appspot.com",
-  messagingSenderId: "324266589853"
-};
-firebase.initializeApp(config);
+
+import firebase from "./configFirebase";
 
 const bidTime = [
   { key: 1, text: "1 day", value: 1 },
@@ -36,7 +28,7 @@ class Listing extends Component {
       bid_jump: 0,
       buy_price: 0,
       pictures: [],
-      categories: [],
+      categories_products: [],
       bid_time: 0,
       categoriesOption: []
     };
@@ -48,7 +40,12 @@ class Listing extends Component {
   }
 
   handleEditorChange = e => {
-    this.setState({ description: e.target.getContent() });
+    this.setState({
+      description: e.target
+        .getContent()
+        .replace("<p>", "")
+        .replace("</p>", "")
+    });
   };
 
   handleUploadError = error => {
@@ -66,33 +63,25 @@ class Listing extends Component {
         });
       });
   };
-
-  //delete Image
-  // deleteImage = () => {
-  //   firebase
-  //     .storage()
-  //     .ref("images")
-  //     .child(this.state.name)
-  //     .delete()
-  //     .then(() => {})
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // };
   showObject = () => {
+    //Product name, Description, List image, Bid time, List category.
     const {
       name,
       description,
-      bid_price,
-      buy_price,
       pictures,
-      bid_time
+      bid_time,
+      categories_products
     } = this.state;
+    //Start time = Now, End time = start time + bid time.
     const start_time = moment().format();
     const end_time = moment(start_time)
-      .add(bid_time, "days")
+      .add(parseInt(bid_time), "days")
       .format();
-    const bid_jump = bid_price * 0.1;
+    //Bid price, buy price, bid jump = 10% of bid price.
+    const bid_price = parseInt(this.state.bid_price);
+    const buy_price = parseInt(this.state.buy_price);
+    const bid_jump = parseInt(bid_price * 0.1);
+    //Create Object use for post request
     const object = {
       name,
       description,
@@ -102,25 +91,30 @@ class Listing extends Component {
       bid_jump,
       buy_price,
       seller_id: 1,
-      pictures,
-      categories_products: this.state.categories
+      categories_products
     };
+    //Add image to object
+    pictures.map((picture, index) => {
+      object[`img${index + 1}`] = picture;
+    });
+
     console.log(object);
   };
   componentWillReceiveProps(nextProps) {
     this.handleCategory(nextProps);
   }
 
+  //Handle change event.
   handleNameChange = (e, { value }) =>
     this.setState({
       name: value
     });
   handleOnchange = (e, { value }) => {
-    const categories = [];
+    const categories_products = [];
     value.map(id => {
-      categories.push({ id });
+      categories_products.push({ id });
     });
-    this.setState({ categories });
+    this.setState({ categories_products });
   };
   handleBidPriceChange = (e, { value }) => {
     this.setState({ bid_price: value });
@@ -142,6 +136,7 @@ class Listing extends Component {
     });
     this.setState({ categoriesOption: categories });
   }
+  //----------------------------
   render() {
     return (
       <Container text>
@@ -219,6 +214,7 @@ class Listing extends Component {
               positive
               fluid
               onClick={() => {
+                //Post request.
                 this.showObject();
               }}
             >
