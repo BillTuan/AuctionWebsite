@@ -26,6 +26,11 @@ class Profile extends Component {
                     active={activeItem === "Credit"}
                     onClick={this.handleItemClick}
                   />
+                  <Menu.Item
+                    name="WatchProduct"
+                    active={activeItem === "WatchProduct"}
+                    onClick={this.handleItemClick}
+                  />
                 </Menu.Menu>
               </Menu.Item>
               <Menu.Item>
