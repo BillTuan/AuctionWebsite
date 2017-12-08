@@ -28,5 +28,9 @@ export const data = {
       yourBid: 19,
       endTime: "December 17, 2019 12:00 am"
     }
+  ],
+  watchProduct: [
+    { name: "Product 1", price: 1111, endTime: "----" },
+    { name: "Product 2", price: 2222, endTime: "-----" }
   ]
 };

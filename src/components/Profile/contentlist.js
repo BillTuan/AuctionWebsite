@@ -116,10 +116,38 @@ const Participating = () => {
     </Grid.Column>
   );
 };
-
+const WatchProduct = () => {
+  return (
+    <Grid.Column stretched width={12}>
+      <Segment>
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Product</Table.HeaderCell>
+              <Table.HeaderCell>Price</Table.HeaderCell>
+              <Table.HeaderCell>End time</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {data.watchProduct.map(item => {
+              return (
+                <Table.Row>
+                  <Table.Cell>{item.name}</Table.Cell>
+                  <Table.Cell>{item.price}</Table.Cell>
+                  <Table.Cell>{item.endTime}</Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        </Table>
+      </Segment>
+    </Grid.Column>
+  );
+};
 export const ContentList = {
   Profile: <ProfileDetail />,
   Credit: <Credit />,
   Completed: <Completed />,
-  Participating: <Participating />
+  Participating: <Participating />,
+  WatchProduct: <WatchProduct />
 };

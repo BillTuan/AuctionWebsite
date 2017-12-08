@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Segment, Form, Container, Dropdown, Button } from "semantic-ui-react";
-import ImageUploader from "react-images-upload";
+import ImageUploader from "react-firebase-file-uploader";
 import { Editor } from "@tinymce/tinymce-react";
-
 import { connect } from "react-redux";
 import * as action from "../../action";
-
+import moment from "moment";
+import axios from "axios";
+import firebase from "./configFirebase";
+import { Redirect } from "react-router-dom";
 const bidTime = [
   { key: 1, text: "1 day", value: 1 },
   { key: 2, text: "2 days", value: 2 },
@@ -17,30 +19,118 @@ const bidTime = [
 class Listing extends Component {
   constructor(props) {
     super(props);
-    this.state = { pictures: [], categories: [] };
-    this.onDrop = this.onDrop.bind(this);
+    this.state = {
+      redirect: false,
+      redirectURL: "/",
+      name: "",
+      description: "",
+      start_time: "",
+      end_time: "",
+      bid_price: 0,
+      bid_jump: 0,
+      buy_price: 0,
+      pictures: [],
+      categories_products: [],
+      bid_time: 0,
+      categoriesOption: []
+    };
+    //this.onDrop = this.onDrop.bind(this);
   }
 
   componentDidMount() {
     this.props.getListCategory();
   }
 
-  onDrop(picture) {
-    this.setState({
-      pictures: this.state.pictures.concat(picture)
-    });
-  }
-
   handleEditorChange = e => {
-    console.log("Content was updated:", e.target.getContent());
+    this.setState({
+      description: e.target
+        .getContent()
+        .replace("<p>", "")
+        .replace("</p>", "")
+    });
   };
 
-  handleUploadImage = e => {};
-
+  handleUploadError = error => {
+    console.error(error);
+  };
+  handleUploadSuccess = filename => {
+    firebase
+      .storage()
+      .ref("images")
+      .child(filename)
+      .getDownloadURL()
+      .then(url => {
+        this.setState({
+          pictures: [...this.state.pictures, url]
+        });
+      });
+  };
+  postProduct = async () => {
+    //Product name, Description, List image, Bid time, List category.
+    const {
+      name,
+      description,
+      pictures,
+      bid_time,
+      categories_products
+    } = this.state;
+    //Start time = Now, End time = start time + bid time.
+    const start_time = moment().format();
+    const end_time = moment(start_time)
+      .add(parseInt(bid_time), "days")
+      .format();
+    //Bid price, buy price, bid jump = 10% of bid price.
+    const bid_price = parseInt(this.state.bid_price);
+    const buy_price = parseInt(this.state.buy_price);
+    const bid_jump = parseInt(bid_price * 0.1);
+    //Create Object use for post request
+    const object = {
+      name,
+      description,
+      start_time,
+      end_time,
+      bid_price,
+      bid_jump,
+      buy_price,
+      seller_id: 1,
+      categories_products
+    };
+    //Add image to object
+    pictures.map((picture, index) => {
+      object[`img${index + 1}`] = picture;
+    });
+    try {
+      const { data, status } = await axios.post("/api/products", object);
+      this.props.history.push(`/product/${data.id}`);
+    } catch (error) {
+      alert(error);
+    }
+  };
   componentWillReceiveProps(nextProps) {
     this.handleCategory(nextProps);
   }
 
+  //Handle change event.
+  handleNameChange = (e, { value }) =>
+    this.setState({
+      name: value
+    });
+  handleOnchange = (e, { value }) => {
+    const categories_products = [];
+    value.map(id => {
+      categories_products.push({ id });
+    });
+    this.setState({ categories_products });
+  };
+  handleBidPriceChange = (e, { value }) => {
+    this.setState({ bid_price: value });
+  };
+  handleBuyPriceChange = (e, { value }) => {
+    this.setState({ buy_price: value });
+  };
+  handleBidTimeChange = (e, { value }) => {
+    this.setState({ bid_time: value });
+  };
   handleCategory(props) {
     const categories = [];
     props.categories.map(({ id, name }) => {
@@ -50,16 +140,22 @@ class Listing extends Component {
         value: id
       });
     });
-    this.setState({ categories: categories });
+    this.setState({ categoriesOption: categories });
   }
+  //----------------------------
   render() {
     return (
       <Container text>
         <Segment padded>
           <Form>
             <Form.Field>
-              <label>Product name</label>
-              <input />
+              <Form.Input
+                label="Product name"
+                type="string"
+                placeholder="Product name"
+                value={this.state.name}
+                onChange={this.handleNameChange}
+              />
             </Form.Field>
             <Form.Field>
               <label>Category</label>
@@ -68,19 +164,20 @@ class Listing extends Component {
                 fluid
                 multiple
                 selection
-                options={this.state.categories}
+                options={this.state.categoriesOption}
+                onChange={this.handleOnchange}
               />
             </Form.Field>
             <Form.Field>
               <label>Product images</label>
               <ImageUploader
-                withIcon={true}
-                buttonText="Choose images"
-                onChange={this.onDrop}
-                withPreview={true}
-                imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                maxFileSize={5242880}
-                onChange={this.handleUploadImage}
+                multiple
+                accept="image/*"
+                name="image"
+                randomizeFilename
+                storageRef={firebase.storage().ref("images")}
+                onUploadError={this.handleUploadError}
+                onUploadSuccess={this.handleUploadSuccess}
               />
             </Form.Field>
             <Form.Field>
@@ -99,18 +196,33 @@ class Listing extends Component {
                 label="Bid price"
                 type="number"
                 placeholder="Product bid price"
+                value={this.state.bid_price}
+                onChange={this.handleBidPriceChange}
               />
               <Form.Input
                 label="Buy price"
                 type="number"
                 placeholder="Product buy price"
+                value={this.state.buy_price}
+                onChange={this.handleBuyPriceChange}
               />
               <Form.Field>
                 <label>Bid time</label>
-                <Dropdown placeholder="Bid time" selection options={bidTime} />
+                <Dropdown
+                  placeholder="Bid time"
+                  selection
+                  options={bidTime}
+                  onChange={this.handleBidTimeChange}
+                />
               </Form.Field>
             </Form.Group>
-            <Form.Button positive fluid>
+            <Form.Button
+              positive
+              fluid
+              onClick={() => {
+                this.postProduct();
+              }}
+            >
               List product
             </Form.Button>
           </Form>

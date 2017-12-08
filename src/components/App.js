@@ -54,10 +54,10 @@ class App extends Component {
           <Route
             exact
             path="/listing"
-            render={() => (
+            render={props => (
               <div>
                 <Header />
-                <Listing />
+                <Listing {...props} />
                 <Footer />
               </div>
             )}
