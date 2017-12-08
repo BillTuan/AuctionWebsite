@@ -5,9 +5,9 @@ import { Editor } from "@tinymce/tinymce-react";
 import { connect } from "react-redux";
 import * as action from "../../action";
 import moment from "moment";
-
+import axios from "axios";
 import firebase from "./configFirebase";
-
+import { Redirect } from "react-router-dom";
 const bidTime = [
   { key: 1, text: "1 day", value: 1 },
   { key: 2, text: "2 days", value: 2 },
@@ -20,6 +20,8 @@ class Listing extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      redirect: false,
+      redirectURL: "/",
       name: "",
       description: "",
       start_time: "",
@@ -63,7 +65,7 @@ class Listing extends Component {
         });
       });
   };
-  showObject = () => {
+  postProduct = async () => {
     //Product name, Description, List image, Bid time, List category.
     const {
       name,
@@ -97,8 +99,12 @@ class Listing extends Component {
     pictures.map((picture, index) => {
       object[`img${index + 1}`] = picture;
     });
-
-    console.log(object);
+    try {
+      const { data, status } = await axios.post("/api/products", object);
+      this.props.history.push(`/product/${data.id}`);
+    } catch (error) {
+      alert(error);
+    }
   };
   componentWillReceiveProps(nextProps) {
     this.handleCategory(nextProps);
@@ -214,8 +220,7 @@ class Listing extends Component {
               positive
               fluid
               onClick={() => {
-                //Post request.
-                this.showObject();
+                this.postProduct();
               }}
             >
               List product
