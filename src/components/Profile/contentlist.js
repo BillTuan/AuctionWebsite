@@ -10,7 +10,8 @@ import {
   Table,
   Icon
 } from "semantic-ui-react";
-import { data } from "./data";
+import { data, getData } from "./data";
+
 const ProfileDetail = () => {
   return (
     <Grid.Column stretched width={12}>
@@ -47,6 +48,8 @@ const Credit = () => {
   );
 };
 const Completed = () => {
+  getData();
+
   return (
     <Grid.Column stretched width={12}>
       <Segment>
