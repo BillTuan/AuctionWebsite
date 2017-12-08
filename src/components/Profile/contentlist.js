@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import { data, getData } from "./data";
 import { connect } from "react-redux";
+import moment from "moment";
 
 const ProfileDetail = () => {
   return (
@@ -101,12 +102,15 @@ const Participating = connect(({ userReducer }) => ({
           <Table.Body>
             {props.participating.map(
               ({ id, end_time, bid_price, name, win }) => {
+                const endTime = moment(end_time).format(
+                  "MMMM Do YYYY, h:mm:ss a"
+                );
                 return (
-                  <Table.Row>
+                  <Table.Row key={id}>
                     <Table.Cell>
                       <Link to={`/product/${id}`}>{name}</Link>
                     </Table.Cell>
-                    <Table.Cell>{end_time}</Table.Cell>
+                    <Table.Cell>{endTime}</Table.Cell>
                     <Table.Cell>{bid_price}</Table.Cell>
                     <Table.Cell>
                       {win === true ? (
@@ -138,13 +142,17 @@ const WatchProduct = props => {
           </Table.Header>
           <Table.Body>
             {watchProduct.map(({ id, name, bid_price, end_time }) => {
+              const endTime = moment(end_time).format(
+                "MMMM Do YYYY, h:mm:ss a"
+              );
+
               return (
-                <Table.Row key={end_time}>
+                <Table.Row key={id}>
                   <Table.Cell>
                     <Link to={`/product/${id}`}>{name}</Link>
                   </Table.Cell>
                   <Table.Cell>{bid_price}</Table.Cell>
-                  <Table.Cell>{end_time}</Table.Cell>
+                  <Table.Cell>{endTime}</Table.Cell>
                 </Table.Row>
               );
             })}
