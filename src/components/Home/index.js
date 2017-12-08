@@ -8,12 +8,34 @@ class Home extends Component {
   state = {};
   componentDidMount() {
     this.props.getListProduct();
+    this.props.getListWatchItem(1);
+  }
+
+  checkWatchedProduct(product) {
+    const { watchItem } = this.props;
+    return (
+      watchItem
+        .map(item => {
+          if (item.id === product.id) {
+            return true;
+          }
+          return false;
+        })
+        .indexOf(true) !== -1
+    );
   }
 
   renderProducts() {
-    const products = chunk(this.props.products, 3);
+    const { watchItem, products } = this.props;
+    const checkProducts = products.map(product => {
+      return this.checkWatchedProduct(product) === true
+        ? { ...product, like: true }
+        : { ...product, like: false };
+    });
+    console.log("FUCKKKK", checkProducts);
+    const likedProduct = chunk(checkProducts, 3);
 
-    return products.map(rowProduct => (
+    return likedProduct.map(rowProduct => (
       <Grid.Row>
         {rowProduct.map(product => (
           <Grid.Column style={{ marginLeft: 40 }}>
@@ -44,7 +66,8 @@ class Home extends Component {
 }
 const mapStateToProps = ({ productReducer }) => {
   return {
-    products: productReducer.products
+    products: productReducer.products,
+    watchItem: productReducer.watchItem
   };
 };
 export default connect(mapStateToProps, action)(Home);

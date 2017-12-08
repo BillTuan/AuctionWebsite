@@ -1,5 +1,9 @@
 import axios from "axios";
-import { GET_LIST_PRODUCT, GET_PRODUCT } from "./constants";
+import {
+  GET_LIST_PRODUCT,
+  GET_PRODUCT,
+  GET_LIST_WATCH_ITEM
+} from "./constants";
 
 export const getListProduct = () => async dispatch => {
   const { data } = await axios.get("/api/products");
@@ -9,4 +13,9 @@ export const getListProduct = () => async dispatch => {
 export const getProduct = id => async dispatch => {
   const { data } = await axios.get("/api/products/" + id);
   dispatch({ type: GET_PRODUCT, payload: data });
+};
+
+export const getListWatchItem = idUser => async dispatch => {
+  const { data } = await axios.get(`/api/users/${idUser}/viewed-items`);
+  dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });
 };
