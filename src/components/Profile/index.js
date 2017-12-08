@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { Container, Grid, Menu, Button, Form } from "semantic-ui-react";
 import { ContentList } from "./contentlist";
-
+import { connect } from "react-redux";
+import * as action from "../../action";
 class Profile extends Component {
   state = { activeItem: "Profile", currentContent: ContentList.Profile };
+  componentDidMount() {
+    this.props.getListWatchItem(1);
+  }
   handleItemClick = (e, { name }) =>
     this.setState({ activeItem: name, currentContent: ContentList[name] });
   render() {
@@ -57,4 +61,7 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = () => {
+  return {};
+};
+export default connect(mapStateToProps, action)(Profile);

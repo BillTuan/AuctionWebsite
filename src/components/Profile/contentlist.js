@@ -11,6 +11,7 @@ import {
   Icon
 } from "semantic-ui-react";
 import { data, getData } from "./data";
+import { connect } from "react-redux";
 
 const ProfileDetail = () => {
   return (
@@ -119,7 +120,9 @@ const Participating = () => {
     </Grid.Column>
   );
 };
-const WatchProduct = () => {
+const WatchProduct = props => {
+  console.log(props);
+  const { watchProduct } = props;
   return (
     <Grid.Column stretched width={12}>
       <Segment>
@@ -127,17 +130,17 @@ const WatchProduct = () => {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Product</Table.HeaderCell>
-              <Table.HeaderCell>Price</Table.HeaderCell>
+              <Table.HeaderCell>Bid Price</Table.HeaderCell>
               <Table.HeaderCell>End time</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {data.watchProduct.map(item => {
+            {watchProduct.map(({ name, bid_price, end_time }) => {
               return (
-                <Table.Row>
-                  <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>{item.price}</Table.Cell>
-                  <Table.Cell>{item.endTime}</Table.Cell>
+                <Table.Row key={end_time}>
+                  <Table.Cell>{name}</Table.Cell>
+                  <Table.Cell>{bid_price}</Table.Cell>
+                  <Table.Cell>{end_time}</Table.Cell>
                 </Table.Row>
               );
             })}
@@ -147,10 +150,14 @@ const WatchProduct = () => {
     </Grid.Column>
   );
 };
+const WatchItem = connect(({ userReducer }) => {
+  console.log("aaaa", userReducer);
+  return { watchProduct: userReducer.watchProduct };
+}, {})(WatchProduct);
 export const ContentList = {
   Profile: <ProfileDetail />,
   Credit: <Credit />,
   Completed: <Completed />,
   Participating: <Participating />,
-  WatchProduct: <WatchProduct />
+  WatchProduct: <WatchItem />
 };

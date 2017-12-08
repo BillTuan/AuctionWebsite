@@ -37,6 +37,5 @@ export const data = {
   ]
 };
 export const getData = async () => {
-  const dataFetched = await axios.get("api/users/1/auctions");
-  console.log(dataFetched);
+  const { data } = await axios.get("/api/users/1/auctions");
 };

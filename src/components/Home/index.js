@@ -64,10 +64,10 @@ class Home extends Component {
     );
   }
 }
-const mapStateToProps = ({ productReducer }) => {
+const mapStateToProps = ({ productReducer, userReducer }) => {
   return {
     products: productReducer.products,
-    watchItem: productReducer.watchItem
+    watchItem: userReducer.watchProduct
   };
 };
 export default connect(mapStateToProps, action)(Home);
