@@ -14,7 +14,8 @@ class CardProduct extends Component {
       bid_price,
       start_time,
       end_time,
-      img1
+      img1,
+      like
     } = this.props.product;
     const duration = moment(end_time).valueOf() - moment(start_time).valueOf();
     const linkProduct = `/product/${id}`;
@@ -60,7 +61,7 @@ class CardProduct extends Component {
             </Button>
           </Link>
           <Button
-            color={this.state.like ? "red" : "gray"}
+            color={like ? "red" : "gray"}
             content="Like"
             icon="heart"
             onClick={() => this.setState({ like: true })}

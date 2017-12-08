@@ -1,8 +1,13 @@
-import { GET_LIST_PRODUCT, GET_PRODUCT } from "../action/constants";
+import {
+  GET_LIST_PRODUCT,
+  GET_PRODUCT,
+  GET_LIST_WATCH_ITEM
+} from "../action/constants";
 
 const initialState = {
   products: [],
-  product: {}
+  product: {},
+  watchItem: []
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +21,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         product: action.payload
+      };
+    case GET_LIST_WATCH_ITEM:
+      return {
+        ...state,
+        watchItem: action.payload
       };
     default:
       return state;
