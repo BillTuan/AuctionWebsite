@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get 'categories/:id/products', to: 'products#get_products_by_categoryid'
 
     get 'admin/alluser', to: 'admin#all_user'
+    get 'admin/prodntacpt', to: 'products#get_products_not_accepted'
 
     get 'users/:user_id/viewed-items', to: 'viewed_items#index'
     post 'users/:user_id/viewed-items/:item_id', to: 'viewed_items#create'

@@ -8,6 +8,14 @@ class Api::ProductsController < ApplicationController
     render json: @products, status: :ok
   end
 
+  def get_products_not_accepted
+     @products =  Product.where(status: 0)
+    if @products.nil?
+      @products = []
+    end
+    render json: @products, status: :ok
+  end
+  
   def get_products_by_categoryid
     @cate_prods = CategoryProduct.select('product_id').where(category_id: params[:id])
     product_idArr = []
