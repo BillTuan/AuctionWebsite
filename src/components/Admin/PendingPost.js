@@ -19,9 +19,6 @@ import * as action from "../../action";
 class PendingPost extends Component {
   state = { openApproveConfirm: false, openDenyConfirm: false };
 
-  componentDidMount() {
-    this.props.getListProduct();
-  }
   //Approve---------------------
   showApproveConfirm = () => {
     this.setState({ openApproveConfirm: true });
@@ -41,7 +38,12 @@ class PendingPost extends Component {
     //do something
     this.setState({ openDenyConfirm: false });
   };
+  componentDidMount() {
+    this.props.getListProductPending();
+    console.log(this.props.productsPending);
+  }
   render() {
+    console.log(this.props.productsPending);
     return (
       <Grid.Column width={12}>
         <Table>
@@ -55,7 +57,7 @@ class PendingPost extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.products.map(
+            {this.props.productsPending.map(
               ({ id, name, description, img1, seller }) => {
                 return (
                   <Table.Row>
@@ -138,7 +140,7 @@ class PendingPost extends Component {
 
 const mapStateToProps = ({ productReducer }) => {
   return {
-    products: productReducer.products
+    productsPending: productReducer.productsPending
   };
 };
 

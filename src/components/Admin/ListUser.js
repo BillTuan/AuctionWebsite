@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Grid, Segment, Table, Icon, Button, Confirm } from "semantic-ui-react";
-
-import { data } from "./data"; //data fetched
-
-const { users } = data;
-
+import * as action from "../../action";
+import { connect } from "react-redux";
 class ListUser extends Component {
   state = { open: false };
   handleCancel = () => {
@@ -14,6 +11,9 @@ class ListUser extends Component {
     //do something
     this.setState({ open: false });
   };
+  componentDidMount() {
+    this.props.getListUser();
+  }
   render() {
     return (
       <Grid.Column width={12}>
@@ -28,11 +28,11 @@ class ListUser extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {users.map(user => {
+            {this.props.users.map(user => {
               return (
                 <Table.Row>
                   <Table.Cell>{user.name}</Table.Cell>
-                  <Table.Cell>{user.mail}</Table.Cell>
+                  <Table.Cell>{user.email}</Table.Cell>
                   <Table.Cell>
                     <Button
                       negative
@@ -59,5 +59,9 @@ class ListUser extends Component {
     );
   }
 }
-
-export default ListUser;
+const mapStateToProps = ({ userReducer }) => {
+  return {
+    users: userReducer.allUser
+  };
+};
+export default connect(mapStateToProps, action)(ListUser);
