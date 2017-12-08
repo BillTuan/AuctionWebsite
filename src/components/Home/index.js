@@ -32,7 +32,6 @@ class Home extends Component {
         ? { ...product, like: true }
         : { ...product, like: false };
     });
-    console.log("FUCKKKK", checkProducts);
     const likedProduct = chunk(checkProducts, 3);
 
     return likedProduct.map(rowProduct => (

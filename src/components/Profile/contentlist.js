@@ -10,6 +10,7 @@ import {
   Table,
   Icon
 } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import { data, getData } from "./data";
 import { connect } from "react-redux";
 
@@ -82,7 +83,9 @@ const Completed = () => {
     </Grid.Column>
   );
 };
-const Participating = () => {
+const Participating = connect(({ userReducer }) => ({
+  participating: userReducer.participating
+}))(props => {
   return (
     <Grid.Column stretched width={12}>
       <Segment>
@@ -96,32 +99,31 @@ const Participating = () => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {data.participatingAuction.map(item => {
-              return (
-                <Table.Row>
-                  <Table.Cell>
-                    <a>{item.name}</a>
-                  </Table.Cell>
-                  <Table.Cell>{item.endTime}</Table.Cell>
-                  <Table.Cell>{item.currentBid}</Table.Cell>
-                  <Table.Cell>
-                    {item.yourBid >= item.currentBid ? (
-                      <Icon color="green" name="smile" size="large" />
-                    ) : (
-                      item.yourBid
-                    )}
-                  </Table.Cell>
-                </Table.Row>
-              );
-            })}
+            {props.participating.map(
+              ({ id, end_time, bid_price, name, win }) => {
+                return (
+                  <Table.Row>
+                    <Table.Cell>
+                      <Link to={`/product/${id}`}>{name}</Link>
+                    </Table.Cell>
+                    <Table.Cell>{end_time}</Table.Cell>
+                    <Table.Cell>{bid_price}</Table.Cell>
+                    <Table.Cell>
+                      {win === true ? (
+                        <Icon color="green" name="smile" size="large" />
+                      ) : null}
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              }
+            )}
           </Table.Body>
         </Table>
       </Segment>
     </Grid.Column>
   );
-};
+});
 const WatchProduct = props => {
-  console.log(props);
   const { watchProduct } = props;
   return (
     <Grid.Column stretched width={12}>
@@ -135,10 +137,12 @@ const WatchProduct = props => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {watchProduct.map(({ name, bid_price, end_time }) => {
+            {watchProduct.map(({ id, name, bid_price, end_time }) => {
               return (
                 <Table.Row key={end_time}>
-                  <Table.Cell>{name}</Table.Cell>
+                  <Table.Cell>
+                    <Link to={`/product/${id}`}>{name}</Link>
+                  </Table.Cell>
                   <Table.Cell>{bid_price}</Table.Cell>
                   <Table.Cell>{end_time}</Table.Cell>
                 </Table.Row>
@@ -151,7 +155,6 @@ const WatchProduct = props => {
   );
 };
 const WatchItem = connect(({ userReducer }) => {
-  console.log("aaaa", userReducer);
   return { watchProduct: userReducer.watchProduct };
 }, {})(WatchProduct);
 export const ContentList = {

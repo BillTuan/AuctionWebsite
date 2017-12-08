@@ -7,6 +7,7 @@ class Profile extends Component {
   state = { activeItem: "Profile", currentContent: ContentList.Profile };
   componentDidMount() {
     this.props.getListWatchItem(1);
+    this.props.getParticipationProduct(1);
   }
   handleItemClick = (e, { name }) =>
     this.setState({ activeItem: name, currentContent: ContentList[name] });
