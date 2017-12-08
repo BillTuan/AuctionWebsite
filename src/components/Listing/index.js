@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as action from "../../action";
 import moment from "moment";
 import axios from "axios";
-import firebase from "./configFirebase";
+import { firebase } from "../../utils";
 import { Redirect } from "react-router-dom";
 const bidTime = [
   { key: 1, text: "1 day", value: 1 },
