@@ -44,9 +44,9 @@ User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFake
   p6 = Product.create!(name: FFaker::Product.product_name,bid_price: 6000,bid_jump: 1000,buy_price: 100000,
   start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u3.id, status: 0)
   p7 = Product.create!(name: FFaker::Product.product_name,bid_price: 7000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u2.id, status: 1)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u2.id, status: 2)
   p8 = Product.create!(name: FFaker::Product.product_name,bid_price: 8000,bid_jump: 1000,buy_price: 100000,
-  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u1.id, status: 1)
+  start_time: FFaker::Time.datetime, end_time: FFaker::Time.datetime, description: FFaker::Lorem.paragraph, seller_id: u1.id, status: 2)
 
   CategoryProduct.create!(category_id: category1.id, product_id: p1.id)
   CategoryProduct.create!(category_id: category1.id, product_id: p2.id)
@@ -64,3 +64,24 @@ User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFake
   CategoryProduct.create!(category_id: category7.id, product_id: p8.id)
   CategoryProduct.create!(category_id: category8.id, product_id: p8.id)
   CategoryProduct.create!(category_id: category7.id, product_id: p8.id)
+
+WatchedItem.create!(user_id: u1.id, product_id: p1.id);
+WatchedItem.create!(user_id: u2.id, product_id: p2.id);
+WatchedItem.create!(user_id: u3.id, product_id: p3.id);
+WatchedItem.create!(user_id: u4.id, product_id: p4.id);
+WatchedItem.create!(user_id: u1.id, product_id: p5.id);
+WatchedItem.create!(user_id: u2.id, product_id: p6.id);
+WatchedItem.create!(user_id: u3.id, product_id: p7.id);
+WatchedItem.create!(user_id: u4.id, product_id: p8.id);
+
+AuctionDetail.create!(product_id: p1.id, user_id: u1.id, currentPrice: 2000, MaxPrice:50000);
+AuctionDetail.create!(product_id: p1.id, user_id: u2.id, currentPrice: 3000, MaxPrice:50000);
+AuctionDetail.create!(product_id: p2.id, user_id: u2.id, currentPrice: 4000, MaxPrice:50000);
+AuctionDetail.create!(product_id: p2.id, user_id: u3.id, currentPrice: 5000, MaxPrice:50000);
+AuctionDetail.create!(product_id: p7.id, user_id: u3.id, currentPrice: 6000, MaxPrice:50000);
+AuctionDetail.create!(product_id: p7.id, user_id: u4.id, currentPrice: 7000, MaxPrice:50000);
+AuctionDetail.create!(product_id: p7.id, user_id: u1.id, currentPrice: 8000, MaxPrice:50000);
+AuctionDetail.create!(product_id: p8.id, user_id: u3.id, currentPrice: 9000, MaxPrice:50000);
+
+BidSuccess.create(product_id: p8.id, bider_id: u3.id, lastPrice: 9000, seller_id: u1.id, status: 0);
+BidSuccess.create(product_id: p7.id, bider_id: u1.id, lastPrice: 8000, seller_id: u2.id, status: 0);

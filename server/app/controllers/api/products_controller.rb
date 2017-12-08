@@ -23,6 +23,14 @@ class Api::ProductsController < ApplicationController
     render json: @products, status: :ok
   end
 
+  def get_products_by_sellerid
+    @products =  Product.where(seller_id: params[:user_id])
+    if @products.nil?
+      @products = []
+    end
+    render json: @products, status: :ok
+  end
+
   def search
     @products =  Product.all
     if params[:search]
