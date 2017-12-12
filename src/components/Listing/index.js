@@ -138,13 +138,22 @@ class Listing extends Component {
       seller_id: 1,
       categories_products
     };
+    console.log(object);
+    console.log(this.props.productDetail.id);
     //Add image to object
     pictures.map((picture, index) => {
       object[`img${index + 1}`] = picture;
     });
     try {
-      const { data, status } = await axios.post("/api/products", object);
-      this.props.history.push(`/product/${data.id}`);
+      if (this.props.editProduct) {
+        const { data, status } = await axios.put(
+          `/api/products/${this.props.productDetail.id}`,
+          object
+        );
+      } else {
+        const { data, status } = await axios.post("/api/products", object);
+        this.props.history.push(`/product/${data.id}`);
+      }
     } catch (error) {
       alert(error);
     }
