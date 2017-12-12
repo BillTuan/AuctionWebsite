@@ -57,7 +57,7 @@ class App extends Component {
             render={props => (
               <div>
                 <Header />
-                <Listing {...props} />
+                <Listing {...props} editProduct={false} />
                 <Footer />
               </div>
             )}

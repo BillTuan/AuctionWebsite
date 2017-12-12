@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Segment, Form, Container, Dropdown, Button } from "semantic-ui-react";
+import {
+  Segment,
+  Form,
+  Container,
+  Dropdown,
+  Button,
+  Image
+} from "semantic-ui-react";
 import ImageUploader from "react-firebase-file-uploader";
 import { Editor } from "@tinymce/tinymce-react";
 import { connect } from "react-redux";
@@ -14,6 +21,16 @@ const bidTime = [
   { key: 3, text: "3 days", value: 3 },
   { key: 4, text: "4 days", value: 4 },
   { key: 5, text: "5 days", value: 5 }
+];
+const imgList = [
+  "img1",
+  "img2",
+  "img3",
+  "img4",
+  "img5",
+  "img6",
+  "img7",
+  "img8"
 ];
 
 class Listing extends Component {
@@ -37,16 +54,42 @@ class Listing extends Component {
     //this.onDrop = this.onDrop.bind(this);
   }
 
+  componentWillMount() {
+    const { editProduct, productDetail } = this.props;
+    if (this.props.editProduct) {
+      console.log(productDetail);
+      this.handleEditProduct(productDetail);
+    }
+  }
   componentDidMount() {
     this.props.getListCategory();
   }
-
+  handleEditProduct = ({
+    name,
+    description,
+    bid_price,
+    buy_price,
+    start_time,
+    end_time
+  }) => {
+    const pictures = [];
+    imgList.map(item => {
+      pictures.push(this.props.productDetail[item]);
+    });
+    const bid_time = moment(end_time).diff(moment(start_time), "days");
+    console.log(bid_time);
+    this.setState({
+      name,
+      description,
+      bid_price,
+      buy_price,
+      pictures,
+      bid_time
+    });
+  };
   handleEditorChange = e => {
     this.setState({
-      description: e.target
-        .getContent()
-        .replace("<p>", "")
-        .replace("</p>", "")
+      description: e.target.getContent()
     });
   };
 
@@ -170,12 +213,20 @@ class Listing extends Component {
             </Form.Field>
             <Form.Field>
               <label>Product images</label>
+              <Image.Group size="tiny">
+                {this.state.pictures.map(item => {
+                  return <Image src={item} />;
+                })}
+              </Image.Group>
               <ImageUploader
                 multiple
                 accept="image/*"
                 name="image"
                 randomizeFilename
                 storageRef={firebase.storage().ref("images")}
+                onUploadStart={() => {
+                  this.setState({ pictures: [] });
+                }}
                 onUploadError={this.handleUploadError}
                 onUploadSuccess={this.handleUploadSuccess}
               />
@@ -183,6 +234,11 @@ class Listing extends Component {
             <Form.Field>
               <label>Description</label>
               <Editor
+                initialValue={
+                  this.props.editProduct
+                    ? this.props.productDetail.description
+                    : ""
+                }
                 init={{
                   plugins: "link image code",
                   toolbar:
@@ -212,6 +268,7 @@ class Listing extends Component {
                   placeholder="Bid time"
                   selection
                   options={bidTime}
+                  value={this.state.bid_time}
                   onChange={this.handleBidTimeChange}
                 />
               </Form.Field>

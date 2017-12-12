@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Modal, Button, Form, TextArea } from "semantic-ui-react";
+import Listing from "../Listing";
 class ModalForm extends Component {
   state = {
     openModal: false
@@ -10,8 +11,8 @@ class ModalForm extends Component {
   handleConfirm() {
     this.setState({ openModal: false });
   }
-
   render() {
+    const { item } = this.props;
     return (
       <Modal
         trigger={
@@ -28,11 +29,7 @@ class ModalForm extends Component {
       >
         <Modal.Header>Please type a reason below</Modal.Header>
         <Modal.Content>
-          <div>
-            <Form>
-              <TextArea placeholder="Tell me why" />
-            </Form>
-          </div>
+          <Listing editProduct={true} productDetail={item} />
         </Modal.Content>
         <Modal.Actions>
           <Button

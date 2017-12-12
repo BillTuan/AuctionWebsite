@@ -72,19 +72,20 @@ const SaleHistory = connect(({ userReducer }) => ({
           </Table.Header>
           <Table.Body>
             {productsPosted.map(
-              ({ name, description, end_time, bid_price, buy_price, img1 }) => {
+              // ({ name, description, end_time, bid_price, buy_price, img1 }) => {
+              item => {
                 return (
                   <Table.Row>
                     <Table.Cell>
-                      <Image src={img1} size="small" />
+                      <Image src={item.img1} size="small" />
                     </Table.Cell>
-                    <Table.Cell>{name}</Table.Cell>
-                    <Table.Cell>{description}</Table.Cell>
-                    <Table.Cell>{end_time}</Table.Cell>
-                    <Table.Cell>{bid_price}</Table.Cell>
-                    <Table.Cell>{buy_price}</Table.Cell>
+                    <Table.Cell>{item.name}</Table.Cell>
+                    <Table.Cell>{item.description}</Table.Cell>
+                    <Table.Cell>{item.end_time}</Table.Cell>
+                    <Table.Cell>{item.bid_price}</Table.Cell>
+                    <Table.Cell>{item.buy_price}</Table.Cell>
                     <Table.Cell>
-                      <ModalForm />
+                      <ModalForm item={item} />
                     </Table.Cell>
                   </Table.Row>
                 );
