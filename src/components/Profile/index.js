@@ -8,6 +8,7 @@ class Profile extends Component {
   componentDidMount() {
     this.props.getListWatchItem(1);
     this.props.getParticipationProduct(1);
+    this.props.getListPostedItem(1);
   }
   handleItemClick = (e, { name }) =>
     this.setState({ activeItem: name, currentContent: ContentList[name] });
@@ -29,6 +30,11 @@ class Profile extends Component {
                   <Menu.Item
                     name="Credit"
                     active={activeItem === "Credit"}
+                    onClick={this.handleItemClick}
+                  />
+                  <Menu.Item
+                    name="SaleHistory"
+                    active={activeItem === "SaleHistory"}
                     onClick={this.handleItemClick}
                   />
                   <Menu.Item

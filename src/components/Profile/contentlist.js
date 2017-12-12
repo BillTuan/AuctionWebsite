@@ -8,7 +8,8 @@ import {
   Button,
   Form,
   Table,
-  Icon
+  Icon,
+  Image
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { data, getData } from "./data";
@@ -50,6 +51,53 @@ const Credit = () => {
     </Grid.Column>
   );
 };
+const SaleHistory = connect(({ userReducer }) => ({
+  productsPosted: userReducer.productsPosted
+}))(props => {
+  const { productsPosted } = props;
+  return (
+    <Grid.Column stretched width={12}>
+      <Segment>
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Image</Table.HeaderCell>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Description</Table.HeaderCell>
+              <Table.HeaderCell>End time</Table.HeaderCell>
+              <Table.HeaderCell>Bid Price</Table.HeaderCell>
+              <Table.HeaderCell>Buy Price</Table.HeaderCell>
+              <Table.HeaderCell />
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {productsPosted.map(
+              ({ name, description, end_time, bid_price, buy_price, img1 }) => {
+                return (
+                  <Table.Row>
+                    <Table.Cell>
+                      <Image src={img1} size="small" />
+                    </Table.Cell>
+                    <Table.Cell>{name}</Table.Cell>
+                    <Table.Cell>{description}</Table.Cell>
+                    <Table.Cell>{end_time}</Table.Cell>
+                    <Table.Cell>{bid_price}</Table.Cell>
+                    <Table.Cell>{buy_price}</Table.Cell>
+                    <Table.Cell>
+                      <Button positive floated="right">
+                        Update
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              }
+            )}
+          </Table.Body>
+        </Table>
+      </Segment>
+    </Grid.Column>
+  );
+});
 const Completed = () => {
   getData();
 
@@ -170,5 +218,6 @@ export const ContentList = {
   Credit: <Credit />,
   Completed: <Completed />,
   Participating: <Participating />,
-  WatchProduct: <WatchItem />
+  WatchProduct: <WatchItem />,
+  SaleHistory: <SaleHistory />
 };

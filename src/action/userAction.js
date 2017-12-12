@@ -2,7 +2,8 @@ import {
   GET_LIST_WATCH_ITEM,
   GET_PROFILE_DETAIL,
   GET_PARTICIPATING_PRODUCT,
-  GET_ALL_USER
+  GET_ALL_USER,
+  GET_LIST_POSTED_ITEM
 } from "./constants";
 import axios from "axios";
 export const getProfileDetail = userID => async dispatch => {
@@ -58,4 +59,8 @@ export const getListWatchItem = userID => async dispatch => {
 export const getListUser = () => async dispatch => {
   const { data } = await axios.get("/api/admin/alluser");
   dispatch({ type: GET_ALL_USER, payload: data });
+};
+export const getListPostedItem = userID => async dispatch => {
+  const { data } = await axios.get(`/api/users/${userID}/products`);
+  dispatch({ type: GET_LIST_POSTED_ITEM, payload: data });
 };
