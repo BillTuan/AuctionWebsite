@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { data, getData } from "./data";
 import { connect } from "react-redux";
 import moment from "moment";
-
+import ModalForm from "./ModalForm";
 const ProfileDetail = () => {
   return (
     <Grid.Column stretched width={12}>
@@ -84,9 +84,7 @@ const SaleHistory = connect(({ userReducer }) => ({
                     <Table.Cell>{bid_price}</Table.Cell>
                     <Table.Cell>{buy_price}</Table.Cell>
                     <Table.Cell>
-                      <Button positive floated="right">
-                        Update
-                      </Button>
+                      <ModalForm />
                     </Table.Cell>
                   </Table.Row>
                 );
