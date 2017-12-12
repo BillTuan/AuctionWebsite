@@ -3,7 +3,7 @@ import { Card, Image, Icon, Segment, Label, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Timer from "../Product/Timer";
-
+import NumberFormat from "../NumberFormat";
 class CardProduct extends Component {
   state = { buttonColor: "orange", like: false };
   render() {
@@ -38,11 +38,13 @@ class CardProduct extends Component {
             tag
             style={{ width: 150, marginLeft: -5, marginBottom: 10 }}
           >
-            Start price: ${bid_price}
+            Start price: <NumberFormat value={bid_price} />
           </Label>
           <Card.Header>{name}</Card.Header>
           <Card.Meta>
-            <span className="date">Current price: $30</span>
+            <span className="date">
+              Current price: <NumberFormat value={30} />
+            </span>
           </Card.Meta>
           <Card.Description>{description.substring(0, 100)}</Card.Description>
         </Card.Content>

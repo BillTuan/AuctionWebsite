@@ -17,10 +17,10 @@ import Timer from "./Timer";
 import { setInterval } from "core-js/library/web/timers";
 import InputPrice from "./InputPrice";
 import MenuInfo from "./MenuInfo";
-
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as action from "../../action";
-
+import NumberFormat from "../NumberFormat";
 const data = {
   name: "SWATCH WOMEN’S QUARTZ RAINBOW DIAL PLASTIC WATCH AUCTION",
   time: "July 30, 2019 12:00 am",
@@ -75,6 +75,7 @@ class Product extends Component {
   }
   render() {
     const {
+      seller,
       name,
       description,
       start_time,
@@ -85,7 +86,7 @@ class Product extends Component {
     } = this.props.product;
     const duration = moment(end_time).valueOf() - moment(start_time).valueOf();
     const endTime = moment(end_time).format("MMMM Do YYYY, h:mm:ss a");
-    console.log("IMAGE", this.state.images);
+    const sellerName = seller === undefined ? "" : seller.name;
 
     return (
       <Container>
@@ -97,19 +98,23 @@ class Product extends Component {
                 {/* Header */}
                 <Grid>
                   <Grid.Column floated="left" width={10}>
-                    <Header size="large">{name}</Header>
+                    <Header size="large">
+                      {name} - <Link to="">[{sellerName}]</Link>
+                    </Header>
                   </Grid.Column>
                   <Grid.Column floated="right" width={5}>
                     <Segment circular style={{ width: 120, height: 120 }}>
                       <Header as="h3">
                         Start from
-                        <Header.Subheader>${bid_price}</Header.Subheader>
+                        <Header.Subheader>
+                          <NumberFormat value={bid_price} />
+                        </Header.Subheader>
                       </Header>
                     </Segment>
                   </Grid.Column>
                 </Grid>
                 <Button size="big" color="blue">
-                  BUY NOW: ${buy_price}
+                  BUY NOW: <NumberFormat value={buy_price} />
                 </Button>
                 <Divider section />
                 {/* Information */}
@@ -119,7 +124,7 @@ class Product extends Component {
                   ribbon="left"
                   style={{ width: 280, fontSize: 18 }}
                 >
-                  General
+                  Categories
                 </Label>
                 <p>{description}</p>
                 <Label

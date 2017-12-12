@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Tab, Menu, Label } from "semantic-ui-react";
-
+import parser from "react-html-parser";
 const panes = [
   {
     menuItem: { key: "details", icon: "info", content: "Description" },
-    render: props => <Tab.Pane>{props.description}</Tab.Pane>
+    render: props => <Tab.Pane>{parser(props.description)}</Tab.Pane>
   },
   {
     menuItem: (
@@ -13,14 +13,6 @@ const panes = [
       </Menu.Item>
     ),
     render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>
-  },
-  {
-    menuItem: (
-      <Menu.Item key="review">
-        Reviews<Label>8</Label>
-      </Menu.Item>
-    ),
-    render: () => <Tab.Pane>Tab 1 Content</Tab.Pane>
   }
 ];
 
