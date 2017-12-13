@@ -9,10 +9,22 @@ import {
   Segment
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
+import { connect } from "react-redux";
+import * as action from "../action";
 class Login extends Component {
-  state = {};
+  state = { email: "", password: "" };
+
+  handleChange = (e, { name, value }) => {
+    this.setState({ [name]: value });
+  };
+
+  handleLogin = () => {
+    const { email, password } = this.state;
+    this.props.signIn(email, password);
+    this.props.history.push("/");
+  };
   render() {
+    const { email, password } = this.state;
     return (
       <div className="login-form">
         <style>{`
@@ -38,20 +50,33 @@ class Login extends Component {
             <Form size="large">
               <Segment stacked>
                 <Form.Input
+                  name="email"
                   fluid
                   icon="user"
                   iconPosition="left"
                   placeholder="E-mail address"
+                  value={email}
+                  onChange={this.handleChange}
                 />
                 <Form.Input
+                  name="password"
                   fluid
                   icon="lock"
                   iconPosition="left"
                   placeholder="Password"
                   type="password"
+                  value={password}
+                  onChange={this.handleChange}
                 />
 
-                <Button color="teal" fluid size="large">
+                <Button
+                  color="teal"
+                  fluid
+                  size="large"
+                  onClick={() => {
+                    this.handleLogin();
+                  }}
+                >
                   Login
                 </Button>
               </Segment>
@@ -66,4 +91,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(() => ({}), action)(Login);

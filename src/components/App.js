@@ -10,19 +10,80 @@ import Listing from "./Listing";
 import Profile from "./Profile";
 import Signup from "./Signup";
 import Admin from "./Admin";
+import * as action from "../action";
+import { connect } from "react-redux";
 
 class App extends Component {
+  componentWillMount() {
+    const headers = JSON.parse(localStorage.getItem("headers"));
+    if (headers) {
+      this.props.getUserProfile(headers);
+    }
+  }
+
+  renderRoute() {
+    return this.props.data === undefined ? null : (
+      <div>
+        <Route
+          exact
+          path="/product/:id"
+          render={props => (
+            <div>
+              <Header />
+              <Product {...props} />
+              <Footer />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/listing"
+          render={props => (
+            <div>
+              <Header />
+              <Listing {...props} editProduct={false} />
+              <Footer />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/profile/:username"
+          render={() => (
+            <div>
+              <Header />
+              <Profile />
+              <Footer />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/signup"
+          render={props => (
+            <div>
+              <Header />
+              <Signup {...props} />
+              <Footer />
+            </div>
+          )}
+        />
+        <Route exact path="/admin" component={Admin} />{" "}
+      </div>
+    );
+  }
   render() {
+    console.log("Props", this.props);
     return (
       <BrowserRouter>
         <div>
           <Route
             exact
             path="/login"
-            render={() => (
+            render={props => (
               <div>
                 <Header />
-                <Login />
+                <Login {...props} />
                 <Footer />
               </div>
             )}
@@ -38,55 +99,13 @@ class App extends Component {
               </div>
             )}
           />
-          <Route
-            exact
-            path="/product/:id"
-            render={props => (
-              <div>
-                <Header />
-                <Product {...props} />
-                <Footer />
-              </div>
-            )}
-          />
-          <Route
-            exact
-            path="/listing"
-            render={props => (
-              <div>
-                <Header />
-                <Listing {...props} editProduct={false} />
-                <Footer />
-              </div>
-            )}
-          />
-          <Route
-            exact
-            path="/profile/:username"
-            render={() => (
-              <div>
-                <Header />
-                <Profile />
-                <Footer />
-              </div>
-            )}
-          />
-          <Route
-            exact
-            path="/signup"
-            render={() => (
-              <div>
-                <Header />
-                <Signup />
-                <Footer />
-              </div>
-            )}
-          />
-          <Route exact path="/admin" component={Admin} />
+          {this.renderRoute()}
         </div>
       </BrowserRouter>
     );
   }
 }
-
-export default App;
+const mapStateToProps = ({ authReducer }) => {
+  return { data: authReducer.data };
+};
+export default connect(mapStateToProps, action)(App);

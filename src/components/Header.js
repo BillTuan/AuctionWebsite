@@ -7,12 +7,13 @@ import {
   Segment,
   Search
 } from "semantic-ui-react";
-
-import { Link } from "react-router-dom";
-
+import { connect } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
+import * as action from "../action";
 class Header extends Component {
   state = { active: "home" };
   render() {
+    console.log(this.props);
     return (
       <Segment stackable="true">
         <Menu inverted pointing color="teal">
@@ -31,23 +32,35 @@ class Header extends Component {
               <Link to="/listing">List product</Link>
             </Menu.Item>
 
-            <Menu.Menu position="right">
-              <Menu.Item>
-                <Link to="/login">
-                  <Button>Login</Button>
-                </Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link to="/signup">
-                  <Button>Sign up</Button>
-                </Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link to="/profile/1">
-                  <Button>Profile</Button>
-                </Link>
-              </Menu.Item>
-            </Menu.Menu>
+            {this.props.data === undefined ? (
+              <Menu.Menu position="right">
+                <Menu.Item>
+                  <Link to="/login">
+                    <Button>Login</Button>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link to="/signup">
+                    <Button>Sign up</Button>
+                  </Link>
+                </Menu.Item>
+              </Menu.Menu>
+            ) : (
+              <Menu.Menu position="right">
+                <Menu.Item>
+                  <Link to={`/profile/${this.props.data.data.id}`}>
+                    <Button>Profile</Button>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Button
+                    onClick={() => this.props.signOut(this.props.history)}
+                  >
+                    Sign Out
+                  </Button>
+                </Menu.Item>
+              </Menu.Menu>
+            )}
           </Container>
         </Menu>
         <Menu borderless widths={1} inverted color="teal">
@@ -62,4 +75,7 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default connect(
+  ({ authReducer }) => ({ data: authReducer.data }),
+  action
+)(withRouter(Header));

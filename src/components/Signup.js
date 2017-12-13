@@ -10,6 +10,10 @@ import {
   Segment
 } from "semantic-ui-react";
 import { regexPassword, regexEmail } from "../utils";
+import { connect } from "react-redux";
+import * as action from "../action";
+import axios from "axios";
+
 class Signup extends Component {
   state = {
     username: "",
@@ -17,6 +21,7 @@ class Signup extends Component {
     repassword: ""
   };
   handleChange = (e, { name, value }) => this.setState({ [name]: value });
+
   validationForm = () => {
     const { username, password, repassword } = this.state;
     return (
@@ -25,9 +30,20 @@ class Signup extends Component {
       password === repassword
     );
   };
-  handleSignup = () => {
-    this.validationForm ? alert("Error") : alert("Success");
+
+  handleSignup = async () => {
+    const { username, password } = this.state;
+    // this.validationForm ? alert("Error") : alert("Success");
+    await axios({
+      method: "POST",
+      url: "/api/auth",
+      headers: { email: username, password }
+    }).catch(error => {
+      alert(error);
+    });
+    this.props.history.push("/login");
   };
+
   render() {
     const { username, password, repassword } = this.state;
     return (
@@ -106,4 +122,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default connect(() => ({}), action)(Signup);

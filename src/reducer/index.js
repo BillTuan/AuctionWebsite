@@ -4,8 +4,10 @@ import { combineReducers } from "redux";
 import productReducer from "./productReducer";
 import categoryReducer from "./categoryReducer";
 import userReducer from "./userReducer";
+import authReducer from "./authReducer";
 export default combineReducers({
   productReducer,
   categoryReducer,
-  userReducer
+  userReducer,
+  authReducer
 });
