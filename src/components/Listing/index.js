@@ -133,7 +133,6 @@ class Listing extends Component {
       categories_products
     };
     console.log(object);
-    console.log(this.props.productDetail.id);
     //Add image to object
     pictures.map((picture, index) => {
       object[`img${index + 1}`] = picture;

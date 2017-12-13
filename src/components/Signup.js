@@ -9,10 +9,27 @@ import {
   Message,
   Segment
 } from "semantic-ui-react";
-
+import { regexPassword, regexEmail } from "../utils";
 class Signup extends Component {
-  state = {};
+  state = {
+    username: "",
+    password: "",
+    repassword: ""
+  };
+  handleChange = (e, { name, value }) => this.setState({ [name]: value });
+  validationForm = () => {
+    const { username, password, repassword } = this.state;
+    return (
+      regexEmail.test(username) &&
+      regexPassword.test(password) &&
+      password === repassword
+    );
+  };
+  handleSignup = () => {
+    this.validationForm ? alert("Error") : alert("Success");
+  };
   render() {
+    const { username, password, repassword } = this.state;
     return (
       <div className="login-form">
         <style>{`
@@ -38,27 +55,43 @@ class Signup extends Component {
             <Form size="large">
               <Segment stacked>
                 <Form.Input
+                  name="username"
                   fluid
                   icon="user"
                   iconPosition="left"
                   placeholder="E-mail address"
+                  value={username}
+                  onChange={this.handleChange}
                 />
                 <Form.Input
+                  name="password"
                   fluid
                   icon="lock"
                   iconPosition="left"
                   placeholder="Password"
                   type="password"
+                  value={password}
+                  onChange={this.handleChange}
                 />
                 <Form.Input
+                  name="repassword"
                   fluid
                   icon="lock"
                   iconPosition="left"
                   placeholder="Confirm password"
                   type="password"
+                  value={repassword}
+                  onChange={this.handleChange}
                 />
 
-                <Button color="teal" fluid size="large">
+                <Button
+                  color="teal"
+                  fluid
+                  size="large"
+                  onClick={() => {
+                    this.handleSignup();
+                  }}
+                >
                   Sign up
                 </Button>
               </Segment>
