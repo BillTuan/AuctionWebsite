@@ -34,10 +34,10 @@ class Home extends Component {
     });
     const likedProduct = chunk(checkProducts, 3);
 
-    return likedProduct.map(rowProduct => (
-      <Grid.Row>
+    return likedProduct.map((rowProduct, index) => (
+      <Grid.Row key={index}>
         {rowProduct.map(product => (
-          <Grid.Column style={{ marginLeft: 40 }}>
+          <Grid.Column style={{ marginLeft: 40 }} key={product.id}>
             <CardProduct product={product} />
           </Grid.Column>
         ))}
@@ -47,17 +47,6 @@ class Home extends Component {
   render() {
     return (
       <Grid columns="equal" padded>
-        {/* <Grid.Column style={{ marginLeft: 40 }}>
-            <CardProduct />
-          </Grid.Column>
-
-          <Grid.Column>
-            <CardProduct />
-          </Grid.Column>
-
-          <Grid.Column>
-            <CardProduct />
-          </Grid.Column> */}
         {this.renderProducts()}
       </Grid>
     );

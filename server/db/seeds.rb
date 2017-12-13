@@ -9,9 +9,12 @@
 # rake db:migrate
 # rake db:seed
 
-# User.delete_all
-# Category.delete_all
-# Product.delete_all
+User.delete_all
+Category.delete_all
+Product.delete_all
+CategoryProduct.delete_all
+WatchedItem.delete_all
+BidSuccess.delete_all
 
 category1 = Category.create!(name: 'GIA ĐÌNH & VƯỜN')
 category2 = Category.create!(name: 'DU LỊCH & THỂ THAO')
@@ -22,11 +25,11 @@ category6 = Category.create!(name: 'Ô TÔ')
 category7 = Category.create!(name: 'XE MÁY')
 category8 = Category.create!(name: 'CÔNG CỤ')
 
-u1 = User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
-u2 = User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+u1 = User.create!(email: 'demo1@gmail.com', password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+u2 = User.create!(email: 'demo2@gmail.com', password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
 u3 = User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
 u4 = User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 3, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
-User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 1, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
+u5 = User.create!(email: 'a@gmail.com', password: '123456', name: FFaker::NameVN.name, status: 1, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
 User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 0, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
 User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 2, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)
 User.create!(email: FFaker::Internet.free_email, password: '123456', name: FFaker::NameVN.name, status: 0, phone: FFaker::PhoneNumber.phone_number, address: FFaker::Address.street_address)

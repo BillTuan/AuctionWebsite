@@ -1,6 +1,5 @@
 class AddProfileUser < ActiveRecord::Migration[5.1]
   def change
-    add_column :users, :name, :string
     add_column :users, :phone, :string
     add_column :users, :address, :string
     add_column :users, :paycard_number, :string, default: '0000000000000000'

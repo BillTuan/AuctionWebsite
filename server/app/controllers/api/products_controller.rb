@@ -8,6 +8,16 @@ class Api::ProductsController < ApplicationController
     render json: @products, status: :ok
   end
 
+  #status: trial
+  def search_by_name
+    @pro =  Product.where(status: 1)
+    @products = @pro.where(["name ILIKE ?","%#{params[:search]}%"])
+    if @products.nil?
+      @products = []
+    end
+    render json: @products, status: :ok
+  end
+
   def get_products_not_accepted
      @products =  Product.where(status: 0)
     if @products.nil?
@@ -58,6 +68,18 @@ class Api::ProductsController < ApplicationController
     end
     render json: @product, status: :ok
   end
+  
+
+  #status: OK
+  def update
+    @products = Product.find(params[:id])
+    if @products.update_attributes(product_params)
+      render json: @products, status: :ok
+    else
+      render json: {status: 'ERROR',messages:'Product not updated',data:products.errors},status: :unprocessable_entity
+    end
+  end
+
 
   def create
     @product = Product.new(product_params)

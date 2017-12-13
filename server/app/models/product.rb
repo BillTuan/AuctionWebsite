@@ -7,4 +7,6 @@ class Product < ApplicationRecord
    #belongs_to :category
   has_many :categories_products,foreign_key: :product_id
   belongs_to :user, :foreign_key => :seller_id, class_name: 'User'
+
+
 end
