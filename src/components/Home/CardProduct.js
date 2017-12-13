@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Icon, Segment, Label, Button } from "semantic-ui-react";
+import { Card, Image, Label, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Timer from "../Product/Timer";

@@ -26,7 +26,7 @@ class Home extends Component {
   }
 
   renderProducts() {
-    const { watchItem, products } = this.props;
+    const { products } = this.props;
     const checkProducts = products.map(product => {
       return this.checkWatchedProduct(product) === true
         ? { ...product, like: true }

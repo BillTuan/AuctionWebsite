@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Format from "react-number-format";
 export default value => {
   return (

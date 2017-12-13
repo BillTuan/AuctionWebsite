@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Tab, Menu, Label } from "semantic-ui-react";
 import parser from "react-html-parser";
 const panes = [

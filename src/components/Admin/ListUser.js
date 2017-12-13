@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Segment, Table, Icon, Button, Confirm } from "semantic-ui-react";
+import { Grid, Table, Icon, Button, Confirm } from "semantic-ui-react";
 import * as action from "../../action";
 import { connect } from "react-redux";
 class ListUser extends Component {

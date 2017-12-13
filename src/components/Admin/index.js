@@ -3,7 +3,6 @@ import { Container, Grid, Menu } from "semantic-ui-react";
 import PendingPost from "./PendingPost";
 import Report from "./Report";
 import ListUser from "./ListUser";
-import { data } from "./data"; // Data fetched
 
 const contents = {
   PendingPost: <PendingPost />,

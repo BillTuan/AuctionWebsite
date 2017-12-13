@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Container, Divider } from "semantic-ui-react";
 
-import { data } from "./data"; // Data fetch
 class Report extends Component {
   state = {};
 

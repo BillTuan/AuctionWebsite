@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import NumericInput from "react-numeric-input";
 
 const InputPrice = props => {

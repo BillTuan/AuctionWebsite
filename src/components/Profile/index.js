@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Grid, Menu, Button, Form } from "semantic-ui-react";
+import { Container, Grid, Menu } from "semantic-ui-react";
 import { ContentList } from "./contentlist";
 import { connect } from "react-redux";
 import * as action from "../../action";

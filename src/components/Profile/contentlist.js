@@ -1,10 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import {
-  Container,
   Segment,
   Grid,
-  Menu,
-  Divider,
   Button,
   Form,
   Table,

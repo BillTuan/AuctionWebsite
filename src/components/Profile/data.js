@@ -1,5 +1,4 @@
 import axios from "axios";
-import redux from "react-redux";
 export const data = {
   name: "Duck Sick",
   address: "600/9/12/1 Kinh Duong Vuong, An Lac, Binh Tan",
@@ -37,5 +36,5 @@ export const data = {
   ]
 };
 export const getData = async () => {
-  const { data } = await axios.get("/api/users/1/auctions");
+  await axios.get("/api/users/1/auctions");
 };

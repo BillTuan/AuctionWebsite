@@ -16,11 +16,6 @@ async function getWinProduct(userID) {
   return data.map(({ product_id }) => ({ product_id }));
 }
 
-async function getProduct(product_id) {
-  const { data } = await axios.get(`/api/products/${product_id}`);
-  return data;
-}
-
 function checkWin(product, winProduct) {
   return (
     winProduct

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-import { Container } from "semantic-ui-react";
-
 //Route
 import Header from "./Header";
 import Footer from "./Footer";

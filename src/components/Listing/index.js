@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Segment,
-  Form,
-  Container,
-  Dropdown,
-  Button,
-  Image
-} from "semantic-ui-react";
+import { Segment, Form, Container, Dropdown, Image } from "semantic-ui-react";
 import ImageUploader from "react-firebase-file-uploader";
 import { Editor } from "@tinymce/tinymce-react";
 import { connect } from "react-redux";
@@ -14,7 +7,7 @@ import * as action from "../../action";
 import moment from "moment";
 import axios from "axios";
 import { firebase } from "../../utils";
-import { Redirect } from "react-router-dom";
+
 const bidTime = [
   { key: 1, text: "1 day", value: 1 },
   { key: 2, text: "2 days", value: 2 },
@@ -55,7 +48,7 @@ class Listing extends Component {
   }
 
   componentWillMount() {
-    const { editProduct, productDetail } = this.props;
+    const { productDetail } = this.props;
     if (this.props.editProduct) {
       console.log(productDetail);
       this.handleEditProduct(productDetail);
@@ -75,6 +68,7 @@ class Listing extends Component {
     const pictures = [];
     imgList.map(item => {
       pictures.push(this.props.productDetail[item]);
+      return item;
     });
     const bid_time = moment(end_time).diff(moment(start_time), "days");
     console.log(bid_time);
@@ -120,12 +114,12 @@ class Listing extends Component {
     //Start time = Now, End time = start time + bid time.
     const start_time = moment().format();
     const end_time = moment(start_time)
-      .add(parseInt(bid_time), "days")
+      .add(parseInt(bid_time, 10), "days")
       .format();
     //Bid price, buy price, bid jump = 10% of bid price.
-    const bid_price = parseInt(this.state.bid_price);
-    const buy_price = parseInt(this.state.buy_price);
-    const bid_jump = parseInt(bid_price * 0.1);
+    const bid_price = parseInt(this.state.bid_price, 10);
+    const buy_price = parseInt(this.state.buy_price, 10);
+    const bid_jump = parseInt(bid_price * 0.1, 10);
     //Create Object use for post request
     const object = {
       name,
@@ -143,15 +137,13 @@ class Listing extends Component {
     //Add image to object
     pictures.map((picture, index) => {
       object[`img${index + 1}`] = picture;
+      return picture;
     });
     try {
       if (this.props.editProduct) {
-        const { data, status } = await axios.put(
-          `/api/products/${this.props.productDetail.id}`,
-          object
-        );
+        await axios.put(`/api/products/${this.props.productDetail.id}`, object);
       } else {
-        const { data, status } = await axios.post("/api/products", object);
+        const { data } = await axios.post("/api/products", object);
         this.props.history.push(`/product/${data.id}`);
       }
     } catch (error) {
@@ -171,6 +163,7 @@ class Listing extends Component {
     const categories_products = [];
     value.map(id => {
       categories_products.push({ id });
+      return id;
     });
     this.setState({ categories_products });
   };
@@ -191,6 +184,7 @@ class Listing extends Component {
         text: name,
         value: id
       });
+      return id;
     });
     this.setState({ categoriesOption: categories });
   }

@@ -1,26 +1,23 @@
 import React, { Component } from "react";
 import {
   Grid,
-  Image,
   Container,
   Segment,
   Header,
   Divider,
   Button,
-  Menu,
-  Label,
-  Tab
+  Label
 } from "semantic-ui-react";
 import Slideshow from "./Slideshow";
 import moment from "moment";
 import Timer from "./Timer";
-import { setInterval } from "core-js/library/web/timers";
 import InputPrice from "./InputPrice";
 import MenuInfo from "./MenuInfo";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as action from "../../action";
 import NumberFormat from "../NumberFormat";
+
 const data = {
   name: "SWATCH WOMEN’S QUARTZ RAINBOW DIAL PLASTIC WATCH AUCTION",
   time: "July 30, 2019 12:00 am",

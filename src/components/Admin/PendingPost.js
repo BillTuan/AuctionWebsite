@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import {
-  Container,
   Table,
   Button,
-  Divider,
   Image,
   Confirm,
   Modal,
@@ -11,8 +9,6 @@ import {
   TextArea,
   Grid
 } from "semantic-ui-react";
-
-import { data } from "./data"; // Data fetch
 
 import { connect } from "react-redux";
 import * as action from "../../action";

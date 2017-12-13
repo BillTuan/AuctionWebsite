@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button, Form, TextArea } from "semantic-ui-react";
+import { Modal, Button } from "semantic-ui-react";
 import Listing from "../Listing";
 class ModalForm extends Component {
   state = {

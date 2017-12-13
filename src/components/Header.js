@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Menu,
   Container,
-  Dropdown,
   Image,
   Button,
   Segment,
