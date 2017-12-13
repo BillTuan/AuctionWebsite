@@ -63,7 +63,7 @@ class CardProduct extends Component {
             </Button>
           </Link>
           <Button
-            color={like ? "red" : "gray"}
+            color={like ? "red" : "grey"}
             content="Like"
             icon="heart"
             onClick={() => this.setState({ like: true })}

@@ -14,10 +14,10 @@ class Header extends Component {
   state = { active: "home" };
   render() {
     return (
-      <Segment stackable>
+      <Segment stackable="true">
         <Menu inverted pointing color="teal">
           <Container>
-            <Menu.Item as="a" header>
+            <Menu.Item header>
               <Link to="/">
                 <Image
                   size="mini"
@@ -27,24 +27,24 @@ class Header extends Component {
                 Odun Auction
               </Link>
             </Menu.Item>
-            <Menu.Item as="a">
+            <Menu.Item>
               <Link to="/listing">List product</Link>
             </Menu.Item>
 
             <Menu.Menu position="right">
               <Menu.Item>
                 <Link to="/login">
-                  <Button as="a">Login</Button>
+                  <Button>Login</Button>
                 </Link>
               </Menu.Item>
               <Menu.Item>
                 <Link to="/signup">
-                  <Button as="a">Sign up</Button>
+                  <Button>Sign up</Button>
                 </Link>
               </Menu.Item>
               <Menu.Item>
                 <Link to="/profile/1">
-                  <Button as="a">Profile</Button>
+                  <Button>Profile</Button>
                 </Link>
               </Menu.Item>
             </Menu.Menu>
