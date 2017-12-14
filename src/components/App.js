@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 //Route
 import Header from "./Header";
 import Footer from "./Footer";
@@ -22,17 +22,70 @@ class App extends Component {
     }
   }
 
-  renderRoute() {
-    return this.props.data === undefined ? null : (
+  _renderRouteAdmin() {
+    return <Route exact path="/admin" component={Admin} />;
+  }
+  _renderRouteWithoutAuthRequire() {
+    return (
+      <Route
+        exact
+        path="/"
+        render={props => (
+          <div>
+            <Header />
+            <Home {...props} />
+            <Footer />
+          </div>
+        )}
+      />
+    );
+  }
+  _renderRouteWithAuthRequire() {
+    return (
       <div>
         <Switch>
+          <Route
+            exact
+            path="/signup"
+            render={props => (
+              <div>
+                <Header />
+                {this.props.data === undefined ? (
+                  <Signup {...props} />
+                ) : (
+                  <Redirect to="/" />
+                )}
+
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/login"
+            render={props => (
+              <div>
+                <Header />
+                {this.props.data === undefined ? (
+                  <Login {...props} />
+                ) : (
+                  <Redirect to="/" />
+                )}
+                <Footer />
+              </div>
+            )}
+          />
           <Route
             exact
             path="/product/:id"
             render={props => (
               <div>
                 <Header />
-                <Product {...props} />
+                {this.props.data === undefined ? (
+                  <Redirect to="/login" />
+                ) : (
+                  <Product {...props} />
+                )}
                 <Footer />
               </div>
             )}
@@ -43,7 +96,11 @@ class App extends Component {
             render={props => (
               <div>
                 <Header />
-                <Listing {...props} editProduct={false} />
+                {this.props.data === undefined ? (
+                  <Redirect to="/login" />
+                ) : (
+                  <Listing {...props} editProduct={false} />
+                )}
                 <Footer />
               </div>
             )}
@@ -54,58 +111,29 @@ class App extends Component {
             render={() => (
               <div>
                 <Header />
-                <Profile />
+                {this.props.data === undefined ? (
+                  <Redirect to="/login" />
+                ) : (
+                  <Profile />
+                )}
                 <Footer />
               </div>
             )}
           />
-          <Route exact path="/admin" component={Admin} />
           <Route render={() => <NotFound />} />
         </Switch>
       </div>
     );
   }
+
   render() {
-    console.log("Props", this.props);
     return (
       <BrowserRouter>
         <div>
           <Switch>
-            <Route
-              exact
-              path="/login"
-              render={props => (
-                <div>
-                  <Header />
-                  <Login {...props} />
-                  <Footer />
-                </div>
-              )}
-            />
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <div>
-                  <Header />
-                  <Home />
-                  <Footer />
-                </div>
-              )}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={props => (
-                <div>
-                  <Header />
-                  <Signup {...props} />
-                  <Footer />
-                </div>
-              )}
-            />
-            {this.renderRoute()}
-            <Route render={() => <NotFound />} />
+            {this._renderRouteAdmin()}
+            {this._renderRouteWithoutAuthRequire()}
+            {this._renderRouteWithAuthRequire()}
           </Switch>
         </div>
       </BrowserRouter>
