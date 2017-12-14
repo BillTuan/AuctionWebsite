@@ -36,7 +36,7 @@ class Signup extends Component {
     // this.validationForm ? alert("Error") : alert("Success");
     await axios({
       method: "POST",
-      url: "/api/auth",
+      url: "/api/users/auth",
       headers: { email: username, password }
     }).catch(error => {
       alert(error);

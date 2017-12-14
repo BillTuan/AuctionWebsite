@@ -49,7 +49,7 @@ class App extends Component {
             render={props => (
               <div>
                 <Header />
-                {this.props.data === undefined ? (
+                {this.props.data === null ? (
                   <Signup {...props} />
                 ) : (
                   <Redirect to="/" />
@@ -65,7 +65,7 @@ class App extends Component {
             render={props => (
               <div>
                 <Header />
-                {this.props.data === undefined ? (
+                {this.props.data === null ? (
                   <Login {...props} />
                 ) : (
                   <Redirect to="/" />
@@ -80,7 +80,7 @@ class App extends Component {
             render={props => (
               <div>
                 <Header />
-                {this.props.data === undefined ? (
+                {this.props.data === null ? (
                   <Redirect to="/login" />
                 ) : (
                   <Product {...props} />
@@ -95,7 +95,7 @@ class App extends Component {
             render={props => (
               <div>
                 <Header />
-                {this.props.data === undefined ? (
+                {this.props.data === null ? (
                   <Redirect to="/login" />
                 ) : (
                   <Listing {...props} editProduct={false} />
@@ -110,7 +110,7 @@ class App extends Component {
             render={() => (
               <div>
                 <Header />
-                {this.props.data === undefined ? (
+                {this.props.data === null ? (
                   <Redirect to="/login" />
                 ) : (
                   <Profile />
