@@ -51,10 +51,10 @@ export const getParticipationProduct = userID => async dispatch => {
 };
 export const getListWatchItem = () => async (dispatch, getState) => {
   const headers = getState().authReducer.headers;
-  console.log("GET WATCH HEADERS", headers);
+  console.log("HEADERS", headers);
   const { data } = await axios({
     method: "GET",
-    url: `/api/users/viewed-items`,
+    url: "/api/users/viewed_items",
     headers
   });
   dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });

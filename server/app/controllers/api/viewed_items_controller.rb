@@ -42,6 +42,18 @@ class Api::ViewedItemsController < ApplicationController
   end
 
   def destroy
+    @temp = WatchedItem.where(user_id: current_user.id, product_id: params[:item_id]).first
+    if @temp.destroy
+      render json: {
+        status: :ok,
+        full_messages: "xóa sp khỏi lịch sử xem thành công"
+      }, status: :ok
+    else
+      render json: {
+        status: :errors,
+        full_messages: "xóa sp khỏi lịch sử xem thành công"
+      }, status: :errors
+    end
   end
 
 end

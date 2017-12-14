@@ -1,6 +1,7 @@
 class Api::AuctionDetailController < ApplicationController
+  before_action :authenticate_user!
   def index
-    @auction_details = AuctionDetail.select('DISTINCT product_id').where(user_id: params[:user_id])
+    @auction_details = AuctionDetail.select('DISTINCT product_id').where(user_id: current_user.id)
     product_idArr = []
 
     @auction_details.each do |t|
