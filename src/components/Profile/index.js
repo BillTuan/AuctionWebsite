@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Container, Grid, Menu } from "semantic-ui-react";
+import { Container, Grid, Menu, Image } from "semantic-ui-react";
 import { ContentList } from "./contentlist";
 import { connect } from "react-redux";
 import * as action from "../../action";
 class Profile extends Component {
   state = { activeItem: "Profile", currentContent: ContentList.Profile };
   componentDidMount() {
+    this.props.getProfileDetail(1);
     this.props.getListWatchItem(1);
     this.props.getParticipationProduct(1);
     this.props.getListPostedItem(1);
@@ -19,6 +20,14 @@ class Profile extends Component {
         <Grid>
           <Grid.Column width={4}>
             <Menu fluid vertical>
+              <Menu.Item>
+                <Image
+                  src="https://community.yellowfinbi.com/public/avatars/default-avatar.svg"
+                  size="small"
+                  circular
+                  centered
+                />
+              </Menu.Item>
               <Menu.Item>
                 <Menu.Header>Your account</Menu.Header>
                 <Menu.Menu>

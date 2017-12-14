@@ -7,7 +7,11 @@ import {
 } from "./constants";
 import axios from "axios";
 export const getProfileDetail = userID => async dispatch => {
-  const { data } = await axios.get("/api/users/");
+  const { data } = JSON.parse(localStorage.getItem("data"));
+  console.log("====================================");
+  console.log(data);
+  console.log("====================================");
+  //const { data } = await axios.get(`/api/users/${userID}`);
   dispatch({ type: GET_PROFILE_DETAIL, payload: data });
 };
 

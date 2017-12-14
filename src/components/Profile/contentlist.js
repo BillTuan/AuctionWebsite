@@ -13,18 +13,21 @@ import { data, getData } from "./data";
 import { connect } from "react-redux";
 import moment from "moment";
 import ModalForm from "./ModalForm";
-const ProfileDetail = () => {
+const ProfileDetail = connect(({ userReducer }) => ({
+  data: userReducer.profileDetail
+}))(props => {
+  const { name, email, phone, address, image } = props.data;
   return (
     <Grid.Column stretched width={12}>
       <Segment>
         <Form>
           <Form.Group unstackable widths={2}>
-            <Form.Input label="Name" value={data.name} />
-            <Form.Input label="Email" value={data.email} />
+            <Form.Input label="Name" value={name} />
+            <Form.Input label="Email" value={email} />
           </Form.Group>
           <Form.Group widths={2}>
-            <Form.Input label="Address" value={data.address} />
-            <Form.Input label="Phone" value={data.phone} />
+            <Form.Input label="Address" value={address} />
+            <Form.Input label="Phone" value={phone} />
           </Form.Group>
           <Button positive floated="right">
             Update
@@ -33,7 +36,7 @@ const ProfileDetail = () => {
       </Segment>
     </Grid.Column>
   );
-};
+});
 const Credit = () => {
   return (
     <Grid.Column stretched width={12}>
