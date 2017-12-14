@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207071222) do
+ActiveRecord::Schema.define(version: 20171214031538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20171207071222) do
 
   create_table "feedbacks", force: :cascade do |t|
     t.integer "fromuser_id"
-    t.integer "touser_id"
+    t.integer "product_id"
     t.integer "rating"
     t.string "comment"
     t.datetime "created_at", null: false
@@ -100,12 +100,10 @@ ActiveRecord::Schema.define(version: 20171207071222) do
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "authentication_token", limit: 30
     t.string "phone"
     t.string "address"
     t.string "paycard_number", default: "0000000000000000"
     t.integer "status", default: 1
-    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -1,5 +1,5 @@
 class Api::CategoriesController < ApplicationController
-
+  # lấy ds danh mục 
   def index
     @categories =  Category.all
     if @categories.nil?

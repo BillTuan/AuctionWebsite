@@ -6,6 +6,8 @@ import {
   GET_LIST_POSTED_ITEM
 } from "./constants";
 import axios from "axios";
+import { getHeader } from "../utils";
+
 export const getProfileDetail = userID => async dispatch => {
   const { data } = JSON.parse(localStorage.getItem("data"));
   console.log("====================================");
@@ -51,8 +53,14 @@ export const getParticipationProduct = userID => async dispatch => {
 
   dispatch({ type: GET_PARTICIPATING_PRODUCT, payload: participating });
 };
-export const getListWatchItem = userID => async dispatch => {
-  const { data } = await axios.get(`/api/users/${userID}/viewed-items`);
+export const getListWatchItem = () => async (dispatch, getState) => {
+  const headers = getState().authReducer.headers;
+  console.log("HEADERS", headers);
+  const { data } = await axios({
+    method: "GET",
+    url: "/api/users/viewed_items",
+    headers
+  });
   dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });
 };
 export const getListUser = () => async dispatch => {

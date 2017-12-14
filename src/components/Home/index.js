@@ -5,10 +5,9 @@ import { connect } from "react-redux";
 import * as action from "../../action";
 import { chunk } from "../../utils";
 class Home extends Component {
-  state = {};
   componentDidMount() {
     this.props.getListProduct();
-    this.props.getListWatchItem(1);
+    this.props.getListWatchItem();
   }
 
   checkWatchedProduct(product) {

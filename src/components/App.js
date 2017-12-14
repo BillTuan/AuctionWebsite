@@ -21,7 +21,6 @@ class App extends Component {
       this.props.getUserProfile(headers);
     }
   }
-
   _renderRouteAdmin() {
     return <Route exact path="/admin" component={Admin} />;
   }
