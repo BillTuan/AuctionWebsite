@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   renderRoute() {
-    return this.props.data === undefined ? null : (
+    return this.props.data === null ? null : (
       <div>
         <Switch>
           <Route

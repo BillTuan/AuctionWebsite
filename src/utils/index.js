@@ -20,3 +20,12 @@ const config = {
 export const regexPassword = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/; //password
 export const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; //email
 export const firebase = fb.initializeApp(config);
+
+export const getHeader = headers => {
+  return {
+    "access-token": headers["access-token"],
+    client: headers["client"],
+    expiry: headers["expiry"],
+    uid: headers["uid"]
+  };
+};

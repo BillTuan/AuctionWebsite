@@ -32,7 +32,7 @@ class Header extends Component {
               <Link to="/listing">List product</Link>
             </Menu.Item>
 
-            {this.props.data === undefined ? (
+            {this.props.data === null ? (
               <Menu.Menu position="right">
                 <Menu.Item>
                   <Link to="/login">
