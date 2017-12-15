@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Segment,
   Grid,
@@ -6,37 +6,103 @@ import {
   Form,
   Table,
   Icon,
-  Image
+  Image,
+  Message
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { data, getData } from "./data";
 import { connect } from "react-redux";
 import moment from "moment";
 import ModalForm from "./ModalForm";
-const ProfileDetail = connect(({ userReducer }) => ({
-  data: userReducer.profileDetail
-}))(props => {
-  const { name, email, phone, address, image } = props.data;
-  return (
-    <Grid.Column stretched width={12}>
-      <Segment>
-        <Form>
-          <Form.Group unstackable widths={2}>
-            <Form.Input label="Name" value={name} />
-            <Form.Input label="Email" value={email} />
-          </Form.Group>
-          <Form.Group widths={2}>
-            <Form.Input label="Address" value={address} />
-            <Form.Input label="Phone" value={phone} />
-          </Form.Group>
-          <Button positive floated="right">
-            Update
-          </Button>
-        </Form>
-      </Segment>
-    </Grid.Column>
-  );
-});
+import * as action from "../../action";
+class Detail extends Component {
+  state = {
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    image: "",
+    onChange: false,
+    disableButton: true
+  };
+  componentWillMount() {
+    const { name, email, phone, address, image } = this.props.data;
+    this.setState({ name, email, phone, address, image });
+  }
+  handleChange = (e, { name, value }) => {
+    this.setState({ [name]: value });
+    this.setState({ onChange: true, disableButton: false });
+  };
+  handleUpdate = () => {
+    const { name, email, phone, address, image } = this.state;
+    const newData = { ...this.props.data, name, email, phone, address, image };
+    this.props.updateProfile(newData);
+    this.setState({ onChange: false });
+  };
+  render() {
+    const { name, email, phone, address, image } = this.state;
+    return (
+      <Grid.Column stretched width={12}>
+        {this.state.onChange ? (
+          <Message negative>
+            <Message.Header>You have changed something</Message.Header>
+            <p>Be careful when press Update</p>
+          </Message>
+        ) : null}
+        <Image
+          src="https://community.yellowfinbi.com/public/avatars/default-avatar.svg"
+          size="small"
+          circular
+          centered
+        />
+        <Segment>
+          <Form>
+            <Form.Group unstackable widths={2}>
+              <Form.Input
+                label="Name"
+                name="name"
+                value={name}
+                onChange={this.handleChange}
+              />
+              <Form.Input
+                label="Email"
+                name="email"
+                value={email}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+            <Form.Group widths={2}>
+              <Form.Input
+                label="Address"
+                name="address"
+                value={address}
+                onChange={this.handleChange}
+              />
+              <Form.Input
+                label="Phone"
+                name="phone"
+                value={phone}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+            <Button
+              disabled={this.state.disableButton}
+              positive
+              floated="right"
+              onClick={() => this.handleUpdate()}
+            >
+              Update
+            </Button>
+          </Form>
+        </Segment>
+      </Grid.Column>
+    );
+  }
+}
+const ProfileDetail = connect(({ userReducer, authReducer }) => {
+  return { data: authReducer.data.data, status: userReducer.status };
+}, action)(Detail);
+
 const Credit = () => {
   return (
     <Grid.Column stretched width={12}>

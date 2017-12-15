@@ -3,14 +3,16 @@ import {
   GET_PROFILE_DETAIL,
   GET_PARTICIPATING_PRODUCT,
   GET_ALL_USER,
-  GET_LIST_POSTED_ITEM
+  GET_LIST_POSTED_ITEM,
+  UPDATE_PROFILE
 } from "../action/constants";
 const initialState = {
   watchProduct: [],
   participating: [],
   profileDetail: {},
   allUser: [],
-  productsPosted: []
+  productsPosted: [],
+  status: 0
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +27,8 @@ export default (state = initialState, action) => {
       return { ...state, participating: action.payload };
     case GET_ALL_USER:
       return { ...state, allUser: action.payload };
+    case UPDATE_PROFILE:
+      return { ...state, status: action.payload };
     default:
       return state;
   }

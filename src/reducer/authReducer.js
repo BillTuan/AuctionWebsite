@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT } from "../action/constants";
+import { SIGN_IN, SIGN_OUT, SET_HEADER } from "../action/constants";
 
 export default (state = { data: null, headers: null }, action) => {
   switch (action.type) {
@@ -6,6 +6,8 @@ export default (state = { data: null, headers: null }, action) => {
       return { data: action.payload.data, headers: action.payload.headers };
     case SIGN_OUT:
       return { data: null, headers: null };
+    case SET_HEADER:
+      return { ...state, headers: action.payload };
     default:
       return state;
   }

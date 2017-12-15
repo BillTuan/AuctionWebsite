@@ -9,3 +9,5 @@ export const GET_LIST_PRODUCT_PENDING = "GET_LIST_PRODUCT_PENDING";
 export const GET_LIST_POSTED_ITEM = "GET_LIST_POSTED_ITEM";
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
+export const UPDATE_PROFILE = "UPDATE_PROFILE";
+export const SET_HEADER = "SET_HEADER";

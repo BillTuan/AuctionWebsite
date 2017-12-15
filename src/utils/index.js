@@ -22,6 +22,9 @@ export const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)
 export const firebase = fb.initializeApp(config);
 
 export const getHeader = headers => {
+  console.log("==============Headers=================");
+  console.log(headers);
+  console.log("====================================");
   return {
     "access-token": headers["access-token"],
     client: headers["client"],

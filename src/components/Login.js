@@ -20,8 +20,7 @@ class Login extends Component {
 
   handleLogin = () => {
     const { email, password } = this.state;
-    this.props.signIn(email, password);
-    this.props.history.push("/");
+    this.props.signIn(email, password, this.props.history);
   };
   render() {
     const { email, password } = this.state;
