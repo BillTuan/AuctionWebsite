@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { Container, Grid, Menu, Image } from "semantic-ui-react";
+import { Container, Grid, Menu } from "semantic-ui-react";
 import { ContentList } from "./contentlist";
 import { connect } from "react-redux";
 import * as action from "../../action";
 class Profile extends Component {
   state = { activeItem: "Profile", currentContent: ContentList.Profile };
   componentDidMount() {
-    this.props.getProfileDetail(1);
     this.props.getListWatchItem();
-    this.props.getParticipationProduct(1);
-    this.props.getListPostedItem(1);
+    this.props.getParticipationProduct();
+    this.props.getListPostedItem();
+    this.props.getWinAuction();
   }
   handleItemClick = (e, { name }) =>
     this.setState({ activeItem: name, currentContent: ContentList[name] });

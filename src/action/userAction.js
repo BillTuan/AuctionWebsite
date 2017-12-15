@@ -1,25 +1,14 @@
 import {
   GET_LIST_WATCH_ITEM,
-  GET_PROFILE_DETAIL,
   GET_PARTICIPATING_PRODUCT,
   GET_ALL_USER,
   GET_LIST_POSTED_ITEM,
-  UPDATE_PROFILE,
   SIGN_IN,
-  SET_HEADER
+  GET_LIST_WIN_ITEM
 } from "./constants";
 import axios from "axios";
-import { getHeader } from "../utils";
 import { setTimeout } from "core-js/library/web/timers";
 
-export const getProfileDetail = userID => async dispatch => {
-  const { data } = JSON.parse(localStorage.getItem("data"));
-  console.log("====================================");
-  console.log(data);
-  console.log("====================================");
-  // const { data } = await axios.get(`/api/users/${userID}/profile`);
-  dispatch({ type: GET_PROFILE_DETAIL, payload: data });
-};
 export const updateProfile = newData => async (dispatch, getState) => {
   const oldHeader = getState().authReducer.headers;
   const oldData = getState().authReducer.data.data;
@@ -97,10 +86,12 @@ export const getListWatchItem = () => async (dispatch, getState) => {
   });
   dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });
 };
+
 export const getListUser = () => async dispatch => {
   const { data } = await axios.get("/api/admin/alluser");
   dispatch({ type: GET_ALL_USER, payload: data });
 };
+
 export const getListPostedItem = () => async (dispatch, getState) => {
   const { headers } = getState().authReducer;
 
@@ -110,4 +101,18 @@ export const getListPostedItem = () => async (dispatch, getState) => {
     headers
   });
   dispatch({ type: GET_LIST_POSTED_ITEM, payload: data });
+};
+
+export const getWinAuction = () => async (dispatch, getState) => {
+  const { headers } = getState().authReducer;
+  const winAuction = await getWinProduct(headers);
+
+  const winProduct = [];
+  for (let index = 0; index < winAuction.length; index++) {
+    const { product_id } = winAuction[index];
+    const { data } = await axios.get(`/api/products/${product_id}`);
+    winProduct.push(data);
+  }
+
+  dispatch({ type: GET_LIST_WIN_ITEM, payload: winProduct });
 };

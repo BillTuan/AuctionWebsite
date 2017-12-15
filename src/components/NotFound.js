@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Container } from "semantic-ui-react";
+import { Image } from "semantic-ui-react";
 import Header from "./Header";
 import Footer from "./Footer";
 class NotFound extends Component {

@@ -10,10 +10,10 @@ import {
   Message
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { data, getData } from "./data";
 import { connect } from "react-redux";
 import moment from "moment";
 import ModalForm from "./ModalForm";
+import NumberFormat from "../NumberFormat";
 import * as action from "../../action";
 class Detail extends Component {
   state = {
@@ -40,7 +40,7 @@ class Detail extends Component {
     this.setState({ onChange: false });
   };
   render() {
-    const { name, email, phone, address, image } = this.state;
+    const { name, email, phone, address } = this.state;
     return (
       <Grid.Column stretched width={12}>
         {this.state.onChange ? (
@@ -108,7 +108,7 @@ const Credit = () => {
     <Grid.Column stretched width={12}>
       <Segment>
         <Form>
-          <Form.Input label="Credit" value={data.credit} />
+          <Form.Input label="Credit" value="3333-3333-3333-3333" />
           <Button positive floated="right">
             Update
           </Button>
@@ -137,56 +137,37 @@ const SaleHistory = connect(({ userReducer }) => ({
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {productsPosted.map(
-              // ({ name, description, end_time, bid_price, buy_price, img1 }) => {
-              item => {
-                return (
-                  <Table.Row>
-                    <Table.Cell>
-                      <Image src={item.img1} size="small" />
-                    </Table.Cell>
-                    <Table.Cell>{item.name}</Table.Cell>
-                    <Table.Cell>{item.description}</Table.Cell>
-                    <Table.Cell>{item.end_time}</Table.Cell>
-                    <Table.Cell>{item.bid_price}</Table.Cell>
-                    <Table.Cell>{item.buy_price}</Table.Cell>
-                    <Table.Cell>
-                      <ModalForm item={item} />
-                    </Table.Cell>
-                  </Table.Row>
-                );
-              }
-            )}
-          </Table.Body>
-        </Table>
-      </Segment>
-    </Grid.Column>
-  );
-});
-const Completed = () => {
-  getData();
-
-  return (
-    <Grid.Column stretched width={12}>
-      <Segment>
-        <Table celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Auction name</Table.HeaderCell>
-              <Table.HeaderCell>Win price</Table.HeaderCell>
-              <Table.HeaderCell>You win</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {data.completedAuction.map(item => {
+            {productsPosted.map(item => {
+              const {
+                id,
+                name,
+                description,
+                end_time,
+                bid_price,
+                buy_price,
+                img1
+              } = item;
+              const endTime = moment(end_time).format(
+                "MMMM Do YYYY, h:mm:ss a"
+              );
               return (
                 <Table.Row>
-                  <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>{item.price}</Table.Cell>
                   <Table.Cell>
-                    {item.isWinner ? (
-                      <Icon color="green" name="winner" size="large" />
-                    ) : null}
+                    <Image src={img1} size="small" />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Link to={`/product/${id}`}>{name}</Link>
+                  </Table.Cell>
+                  <Table.Cell>{description.substring(0, 100)}</Table.Cell>
+                  <Table.Cell>{endTime}</Table.Cell>
+                  <Table.Cell>
+                    <NumberFormat value={bid_price} />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <NumberFormat value={buy_price} />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <ModalForm item={item} />
                   </Table.Cell>
                 </Table.Row>
               );
@@ -196,7 +177,44 @@ const Completed = () => {
       </Segment>
     </Grid.Column>
   );
-};
+});
+const Completed = connect(({ userReducer }) => ({
+  winProduct: userReducer.winProduct
+}))(props => {
+  return (
+    <Grid.Column stretched width={12}>
+      <Segment>
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Auction name</Table.HeaderCell>
+              <Table.HeaderCell>Win price</Table.HeaderCell>
+              <Table.HeaderCell>End time</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {props.winProduct.map(({ id, name, bid_price, end_time }) => {
+              const endTime = moment(end_time).format(
+                "MMMM Do YYYY, h:mm:ss a"
+              );
+              return (
+                <Table.Row key={id}>
+                  <Table.Cell>
+                    <Link to={`/product/${id}`}>{name}</Link>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <NumberFormat value={bid_price} />
+                  </Table.Cell>
+                  <Table.Cell>{endTime}</Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        </Table>
+      </Segment>
+    </Grid.Column>
+  );
+});
 const Participating = connect(({ userReducer }) => ({
   participating: userReducer.participating
 }))(props => {
@@ -224,7 +242,9 @@ const Participating = connect(({ userReducer }) => ({
                       <Link to={`/product/${id}`}>{name}</Link>
                     </Table.Cell>
                     <Table.Cell>{endTime}</Table.Cell>
-                    <Table.Cell>{bid_price}</Table.Cell>
+                    <Table.Cell>
+                      <NumberFormat value={bid_price} />
+                    </Table.Cell>
                     <Table.Cell>
                       {win === true ? (
                         <Icon color="green" name="smile" size="large" />
@@ -264,7 +284,9 @@ const WatchProduct = props => {
                   <Table.Cell>
                     <Link to={`/product/${id}`}>{name}</Link>
                   </Table.Cell>
-                  <Table.Cell>{bid_price}</Table.Cell>
+                  <Table.Cell>
+                    <NumberFormat value={bid_price} />
+                  </Table.Cell>
                   <Table.Cell>{endTime}</Table.Cell>
                 </Table.Row>
               );
