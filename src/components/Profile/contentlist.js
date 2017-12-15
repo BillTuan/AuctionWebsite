@@ -66,6 +66,7 @@ class Detail extends Component {
               />
               <Form.Input
                 label="Email"
+                readOnly
                 name="email"
                 value={email}
                 onChange={this.handleChange}
