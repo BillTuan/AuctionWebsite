@@ -101,15 +101,17 @@ export const getListWatchItem = () => async (dispatch, getState) => {
     url: "/api/users/viewed_items",
     headers: oldHeaders
   });
+  //dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });
+  console.log("==============New headers=================");
+  console.log(headers);
+  console.log("====================================");
 
   const credentialHeaders = getHeader(headers);
   const stringCredentialHeaders = JSON.stringify(credentialHeaders);
   setTimeout(() => {
     localStorage.setItem("headers", stringCredentialHeaders);
-    setTimeout(() => {
-      dispatch({ type: SET_HEADER, payload: credentialHeaders });
-      dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });
-    }, 100);
+    dispatch({ type: SET_HEADER, payload: credentialHeaders });
+    dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });
   }, 100);
 };
 export const getListUser = () => async dispatch => {

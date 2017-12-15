@@ -34,8 +34,17 @@ export const getUserProfile = () => async dispatch => {
   dispatch({ type: SIGN_IN, payload: { data, headers } });
 };
 
-export const signOut = history => async dispatch => {
+export const signOut = history => async (dispatch, getState) => {
   localStorage.clear();
+  const { headers } = getState().authReducer;
+  const { status } = await axios({
+    method: "DELETE",
+    url: "/api/users/auth/sign_out",
+    headers
+  });
+  console.log("===============Status Sign Out================");
+  console.log(status);
+  console.log("====================================");
   history.push("/login");
   dispatch({ type: SIGN_OUT });
 };
