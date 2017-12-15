@@ -50,7 +50,6 @@ class Listing extends Component {
   componentWillMount() {
     const { productDetail } = this.props;
     if (this.props.editProduct) {
-      console.log(productDetail);
       this.handleEditProduct(productDetail);
     }
   }
@@ -71,7 +70,6 @@ class Listing extends Component {
       return item;
     });
     const bid_time = moment(end_time).diff(moment(start_time), "days");
-    console.log(bid_time);
     this.setState({
       name,
       description,
@@ -132,7 +130,6 @@ class Listing extends Component {
       seller_id: 1,
       categories_products
     };
-    console.log(object);
     //Add image to object
     pictures.map((picture, index) => {
       object[`img${index + 1}`] = picture;

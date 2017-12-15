@@ -13,7 +13,6 @@ import * as action from "../action";
 class Header extends Component {
   state = { active: "home" };
   render() {
-    console.log(this.props);
     return (
       <Segment stackable="true">
         <Menu inverted pointing color="teal">

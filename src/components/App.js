@@ -41,100 +41,96 @@ class App extends Component {
   }
   _renderRouteWithAuthRequire() {
     return (
-      <div>
-        <Switch>
-          <Route
-            exact
-            path="/signup"
-            render={props => (
-              <div>
-                <Header />
-                {this.props.data === null ? (
-                  <Signup {...props} />
-                ) : (
-                  <Redirect to="/" />
-                )}
+      <Switch>
+        <Route
+          exact
+          path="/signup"
+          render={props => (
+            <div>
+              <Header />
+              {this.props.data === null ? (
+                <Signup {...props} />
+              ) : (
+                <Redirect to="/" />
+              )}
 
-                <Footer />
-              </div>
-            )}
-          />
-          <Route
-            exact
-            path="/login"
-            render={props => (
-              <div>
-                <Header />
-                {this.props.data === null ? (
-                  <Login {...props} />
-                ) : (
-                  <Redirect to="/" />
-                )}
-                <Footer />
-              </div>
-            )}
-          />
-          <Route
-            exact
-            path="/product/:id"
-            render={props => (
-              <div>
-                <Header />
-                {this.props.data === null ? (
-                  <Redirect to="/login" />
-                ) : (
-                  <Product {...props} />
-                )}
-                <Footer />
-              </div>
-            )}
-          />
-          <Route
-            exact
-            path="/listing"
-            render={props => (
-              <div>
-                <Header />
-                {this.props.data === null ? (
-                  <Redirect to="/login" />
-                ) : (
-                  <Listing {...props} editProduct={false} />
-                )}
-                <Footer />
-              </div>
-            )}
-          />
-          <Route
-            exact
-            path="/profile/:username"
-            render={() => (
-              <div>
-                <Header />
-                {this.props.data === null ? (
-                  <Redirect to="/login" />
-                ) : (
-                  <Profile />
-                )}
-                <Footer />
-              </div>
-            )}
-          />
-          <Route render={() => <NotFound />} />
-        </Switch>
-      </div>
+              <Footer />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/login"
+          render={props => (
+            <div>
+              <Header />
+              {this.props.data === null ? (
+                <Login {...props} />
+              ) : (
+                <Redirect to="/" />
+              )}
+              <Footer />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/product/:id"
+          render={props => (
+            <div>
+              <Header />
+              {this.props.data === null ? (
+                <Redirect to="/login" />
+              ) : (
+                <Product {...props} />
+              )}
+              <Footer />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/listing"
+          render={props => (
+            <div>
+              <Header />
+              {this.props.data === null ? (
+                <Redirect to="/login" />
+              ) : (
+                <Listing {...props} editProduct={false} />
+              )}
+              <Footer />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/profile/:username"
+          render={() => (
+            <div>
+              <Header />
+              {this.props.data === null ? (
+                <Redirect to="/login" />
+              ) : (
+                <Profile />
+              )}
+              <Footer />
+            </div>
+          )}
+        />
+        <Route render={() => <NotFound />} />
+      </Switch>
     );
   }
 
   render() {
     return (
       <BrowserRouter>
-        <div>
-          <Switch>
-            {this._renderRouteAdmin()}
-            {this._renderRouteWithoutAuthRequire()}
-            {this._renderRouteWithAuthRequire()}
-          </Switch>
-        </div>
+        <Switch>
+          {this._renderRouteAdmin()}
+          {this._renderRouteWithoutAuthRequire()}
+          {this._renderRouteWithAuthRequire()}
+        </Switch>
       </BrowserRouter>
     );
   }

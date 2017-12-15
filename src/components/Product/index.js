@@ -56,7 +56,6 @@ class Product extends Component {
   handleImage(newProps) {
     const images = [];
     const { img1, img2, img3, img4, img5, img6, img7, img8 } = newProps.product;
-    // console.log(this.props.product);
     images.push(
       { original: img1, thumbnail: img1 },
       { original: img2, thumbnail: img2 },

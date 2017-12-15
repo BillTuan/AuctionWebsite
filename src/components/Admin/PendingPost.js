@@ -36,10 +36,8 @@ class PendingPost extends Component {
   };
   componentDidMount() {
     this.props.getListProductPending();
-    console.log(this.props.productsPending);
   }
   render() {
-    console.log(this.props.productsPending);
     return (
       <Grid.Column width={12}>
         <Table>
