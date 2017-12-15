@@ -6,7 +6,8 @@ import {
   Header,
   Divider,
   Button,
-  Label
+  Label,
+  List
 } from "semantic-ui-react";
 import Slideshow from "./Slideshow";
 import moment from "moment";
@@ -79,12 +80,13 @@ class Product extends Component {
       end_time,
       bid_price,
       buy_price,
-      bid_jump
+      bid_jump,
+      categories
     } = this.props.product;
     const duration = moment(end_time).valueOf() - moment(start_time).valueOf();
     const endTime = moment(end_time).format("MMMM Do YYYY, h:mm:ss a");
     const sellerName = seller === undefined ? "" : seller.name;
-
+    const listCategories = categories === undefined ? [] : categories;
     return (
       <Container>
         <Segment.Group>
@@ -123,7 +125,13 @@ class Product extends Component {
                 >
                   Categories
                 </Label>
-                <p>{description}</p>
+                <p>
+                  {listCategories.map(({ id, name }) => (
+                    <List as="ul" key={id}>
+                      <List.Item as="li">{name}</List.Item>
+                    </List>
+                  ))}
+                </p>
                 <Label
                   as="a"
                   color="teal"

@@ -23,42 +23,31 @@ export const getProfileDetail = userID => async dispatch => {
 export const updateProfile = newData => async (dispatch, getState) => {
   const oldHeader = getState().authReducer.headers;
   const oldData = getState().authReducer.data.data;
-
-  const { headers, status } = await axios({
+  const { status } = await axios({
     method: "PUT",
     url: "/api/users",
     headers: oldHeader,
     data: newData
   });
-
-  const newHeader = getHeader(headers);
   const packData = { data: status === 200 ? newData : oldData };
-  const credentialHeaders = status === 200 ? newHeader : oldHeader;
-
-  const stringCredentialHeaders = await JSON.stringify(credentialHeaders);
-  const stringPackData = await JSON.stringify(packData);
-
   setTimeout(() => {
-    localStorage.setItem("headers", stringCredentialHeaders);
-    localStorage.setItem("data", stringPackData);
-    setTimeout(() => {
-      dispatch({
-        type: SIGN_IN,
-        payload: {
-          data: packData,
-          headers: credentialHeaders
-        }
-      });
-      dispatch({
-        type: UPDATE_PROFILE,
-        payload: status
-      });
-    }, 200);
-  }, 200);
+    localStorage.setItem("data", JSON.stringify(packData));
+    dispatch({
+      type: SIGN_IN,
+      payload: {
+        data: packData,
+        headers: oldHeader
+      }
+    });
+  }, 100);
 };
 
-async function getWinProduct(userID) {
-  const { data } = await axios.get(`/api/users/${userID}/bids`);
+async function getWinProduct(headers) {
+  const { data } = await axios({
+    url: `/api/users/bids`,
+    method: "GET",
+    headers
+  });
   return data.map(({ product_id }) => ({ product_id }));
 }
 
@@ -75,9 +64,15 @@ function checkWin(product, winProduct) {
   );
 }
 
-export const getParticipationProduct = userID => async dispatch => {
-  const { data } = await axios.get(`/api/users/${userID}/auctions`);
-  const winBid = await getWinProduct(userID);
+export const getParticipationProduct = () => async (dispatch, getState) => {
+  const { headers } = getState().authReducer;
+
+  const { data } = await axios({
+    url: `/api/users/auctions`,
+    method: "GET",
+    headers
+  });
+  const winBid = await getWinProduct(headers);
   const winProduct = [];
   for (let index = 0; index < winBid.length; index++) {
     const { product_id } = winBid[index];
@@ -94,43 +89,25 @@ export const getParticipationProduct = userID => async dispatch => {
   dispatch({ type: GET_PARTICIPATING_PRODUCT, payload: participating });
 };
 export const getListWatchItem = () => async (dispatch, getState) => {
-  const oldHeaders = getState().authReducer.headers;
-  console.log("HEADERS", oldHeaders);
-  const { data, headers } = await axios({
+  const { headers } = getState().authReducer;
+  const { data } = await axios({
     method: "GET",
     url: "/api/users/viewed_items",
-    headers: oldHeaders
+    headers
   });
-  //dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });
-  console.log("==============New headers=================");
-  console.log(headers);
-  console.log("====================================");
-
-  const credentialHeaders = getHeader(headers);
-  const stringCredentialHeaders = JSON.stringify(credentialHeaders);
-  setTimeout(() => {
-    localStorage.setItem("headers", stringCredentialHeaders);
-    dispatch({ type: SET_HEADER, payload: credentialHeaders });
-    dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });
-  }, 100);
+  dispatch({ type: GET_LIST_WATCH_ITEM, payload: data });
 };
 export const getListUser = () => async dispatch => {
   const { data } = await axios.get("/api/admin/alluser");
   dispatch({ type: GET_ALL_USER, payload: data });
 };
-export const getListPostedItem = userID => async dispatch => {
-  const { data } = await axios.get(`/api/users/${userID}/products`);
+export const getListPostedItem = () => async (dispatch, getState) => {
+  const { headers } = getState().authReducer;
+
+  const { data } = await axios({
+    url: `/api/users/products`,
+    method: "GET",
+    headers
+  });
   dispatch({ type: GET_LIST_POSTED_ITEM, payload: data });
 };
-
-// function setHeaders(headers,oldHeader,oldData,newData) {
-//   const newHeader = getHeader(headers);
-//   const packData = { data: status === 200 ? newData : oldData };
-//   const credentialHeaders = status === 200 ? newHeader : oldHeader;
-
-//   const stringCredentialHeaders = await JSON.stringify(credentialHeaders);
-//   const stringPackData = await JSON.stringify(packData);
-
-//   localStorage.setItem("headers", stringCredentialHeaders);
-//   localStorage.setItem("data", stringPackData);
-// }
