@@ -40,7 +40,7 @@ class Listing extends Component {
       bid_jump: 0,
       buy_price: 0,
       pictures: [],
-      categories_products: [],
+      categories: [],
       bid_time: 0,
       categoriesOption: []
     };
@@ -102,12 +102,14 @@ class Listing extends Component {
   };
   postProduct = async () => {
     //Product name, Description, List image, Bid time, List category.
+    const { headers } = this.props;
     const {
       name,
       description,
       pictures,
       bid_time,
-      categories_products
+      categories,
+      categoriesOption
     } = this.state;
     //Start time = Now, End time = start time + bid time.
     const start_time = moment().format();
@@ -127,8 +129,7 @@ class Listing extends Component {
       bid_price,
       bid_jump,
       buy_price,
-      seller_id: 1,
-      categories_products
+      categories
     };
     //Add image to object
     pictures.map((picture, index) => {
@@ -136,11 +137,23 @@ class Listing extends Component {
       return picture;
     });
     try {
-      if (this.props.editProduct) {
-        await axios.put(`/api/products/${this.props.productDetail.id}`, object);
-      } else {
-        const { data } = await axios.post("/api/products", object);
+      if (!this.props.editProduct) {
+        const { data } = await axios({
+          url: "/api/products",
+          method: "POST",
+          headers,
+          data: object
+        });
         this.props.history.push(`/product/${data.id}`);
+      } else {
+        const { data } = await axios({
+          url: `/api/products/${this.props.productDetail.id}`,
+          method: "PUT",
+          headers,
+          data: object
+        });
+        this.props.getListPostedItem();
+        this.props.confirm();
       }
     } catch (error) {
       alert(error);
@@ -156,12 +169,14 @@ class Listing extends Component {
       name: value
     });
   handleOnchange = (e, { value }) => {
-    const categories_products = [];
+    const categories = [];
     value.map(id => {
-      categories_products.push({ id });
-      return id;
+      categories.push({
+        id,
+        name: this.state.categoriesOption[id].text
+      });
     });
-    this.setState({ categories_products });
+    this.setState({ categories });
   };
   handleBidPriceChange = (e, { value }) => {
     this.setState({ bid_price: value });
@@ -288,8 +303,9 @@ class Listing extends Component {
   }
 }
 
-const mapStateToProps = ({ categoryReducer }) => {
+const mapStateToProps = ({ categoryReducer, authReducer }) => {
   return {
+    headers: authReducer.headers,
     categories: categoryReducer.categories
   };
 };

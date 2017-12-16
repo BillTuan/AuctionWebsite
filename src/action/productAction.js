@@ -18,3 +18,10 @@ export const getProduct = id => async dispatch => {
   const { data } = await axios.get("/api/products/" + id);
   dispatch({ type: GET_PRODUCT, payload: data });
 };
+
+export const getListResultSearch = input => async dispatch => {
+  const { data } = await axios.get(`/api/search?search=${input}`);
+  console.log("====================================");
+  console.log(data);
+  console.log("====================================");
+};

@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import {
-  Menu,
-  Container,
-  Image,
-  Button,
-  Segment,
-  Search
-} from "semantic-ui-react";
+import { Menu, Container, Image, Button, Segment } from "semantic-ui-react";
+import Search from "./Search";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import * as action from "../action";
@@ -63,11 +57,12 @@ class Header extends Component {
           </Container>
         </Menu>
         <Menu borderless widths={1} inverted color="teal">
-          <Search
+          {/* <Search
             icon="search"
             size="massive"
             style={{ marginTop: 15, marginBottom: 15 }}
-          />
+          /> */}
+          <Search />
         </Menu>
       </Segment>
     );

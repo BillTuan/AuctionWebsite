@@ -29,9 +29,13 @@ class ModalForm extends Component {
       >
         <Modal.Header>Please type a reason below</Modal.Header>
         <Modal.Content>
-          <Listing editProduct={true} productDetail={item} />
+          <Listing
+            editProduct={true}
+            productDetail={item}
+            confirm={() => this.handleConfirm()}
+          />
         </Modal.Content>
-        <Modal.Actions>
+        {/* <Modal.Actions>
           <Button
             onClick={() => {
               this.handleCancel();
@@ -47,7 +51,7 @@ class ModalForm extends Component {
           >
             Yes
           </Button>
-        </Modal.Actions>
+        </Modal.Actions> */}
       </Modal>
     );
   }
