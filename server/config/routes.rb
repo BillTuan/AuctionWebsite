@@ -21,12 +21,21 @@ Rails.application.routes.draw do
     # đăng sản phẩm mới, body nhận vào các thông tin của sp
     post 'products', to: 'products#create'
 
+    # lấy lịch sử đấu giá theo product id
+    get 'products/:id/history', to: 'auction_detail#history'
+
     # lấy sản phẩm theo id người bán
     get 'products/seller/:seller_id', to: 'products#get_products_by_sellerid'
 
     # lấy tìm sp theo tên
     get 'search', to: 'products#search_by_name'
     
+    # gửi feedback đến user và sp
+    post 'products/:product_id/feedbacks', to: 'feedbacks#create'
+        
+    # lấy feedback của user và sp
+    get 'products/:product_id/feedbacks', to: 'feedbacks#product_feedbacks'
+
     #### PHẦN CỦA ADMIN ####
     # admin lấy ds các users
     get 'admin/alluser', to: 'admin#all_users'
@@ -62,6 +71,7 @@ Rails.application.routes.draw do
 
     # xem các sp mà mình đã đăng
     get 'users/products', to: 'products#get_products_of_current_user'
+
     #resources :products
     #resources :categories
     #post 'products/search', to: 'products#search'#, as: 'patient'
