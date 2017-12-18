@@ -30,3 +30,13 @@ export const getBidHistory = id => async (dispatch, getState) => {
   });
   dispatch({ type: GET_BID_HISTORY, payload: data });
 };
+
+export const likeItem = id => async (dispatch, getState) => {
+  const { headers } = getState().authReducer;
+  await axios({
+    method: "POST",
+    url: `/api/users/viewed-items/${id}`,
+    headers
+  });
+  dispatch({ type: "LIKE" });
+};

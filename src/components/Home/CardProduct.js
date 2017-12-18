@@ -1,11 +1,26 @@
 import React, { Component } from "react";
 import { Card, Image, Label, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import * as action from "../../action";
+
 import moment from "moment";
 import Timer from "../Product/Timer";
 import NumberFormat from "../NumberFormat";
 class CardProduct extends Component {
   state = { buttonColor: "orange", like: false };
+
+  handleLike() {
+    if (!this.state.like) {
+      this.setState({ like: true });
+      this.props.likeItem(this.props.product.id);
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      like: nextProps.product.like
+    });
+  }
   render() {
     const {
       id,
@@ -14,8 +29,7 @@ class CardProduct extends Component {
       bid_price,
       start_time,
       end_time,
-      img1,
-      like
+      img1
     } = this.props.product;
     const duration = moment(end_time).valueOf() - moment(start_time).valueOf();
     const linkProduct = `/product/${id}`;
@@ -63,10 +77,10 @@ class CardProduct extends Component {
             </Button>
           </Link>
           <Button
-            color={like ? "red" : "grey"}
+            color={this.state.like ? "red" : "grey"}
             content="Like"
             icon="heart"
-            onClick={() => this.setState({ like: true })}
+            onClick={() => this.handleLike()}
             floated="right"
           />
         </Card.Content>
@@ -75,4 +89,4 @@ class CardProduct extends Component {
   }
 }
 
-export default CardProduct;
+export default connect(() => ({}), action)(CardProduct);
