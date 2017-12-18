@@ -19,31 +19,6 @@ import { connect } from "react-redux";
 import * as action from "../../action";
 import NumberFormat from "../NumberFormat";
 
-const data = {
-  name: "SWATCH WOMEN’S QUARTZ RAINBOW DIAL PLASTIC WATCH AUCTION",
-  time: "July 30, 2019 12:00 am",
-  currentBid: 551.0,
-  des: `Quartz movement
-        Case diameter: 33 mm
-        Casual watch
-        Plastic
-        Water-resistant to 30 M (99 feet)`,
-  images: [
-    {
-      original: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png",
-      thumbnail: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png"
-    },
-    {
-      original: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png",
-      thumbnail: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png"
-    },
-    {
-      original: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png",
-      thumbnail: "http://zooms.gr/wp-content/uploads/2017/11/testProduct.png"
-    }
-  ]
-};
-
 class Product extends Component {
   state = { images: [] };
   componentDidMount() {
@@ -155,10 +130,10 @@ class Product extends Component {
                     fontSize: 16
                   }}
                 >
-                  Current bid: ${data.currentBid}
+                  Current bid: $551
                 </Label>
                 <div style={{ margin: 10 }}>
-                  <InputPrice value={data.currentBid} step={bid_jump} />
+                  <InputPrice value={551} step={bid_jump} />
                 </div>
 
                 <div style={{ margin: 10 }}>
