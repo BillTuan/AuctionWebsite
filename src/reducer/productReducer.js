@@ -1,10 +1,12 @@
 import {
   GET_LIST_PRODUCT,
   GET_PRODUCT,
-  GET_LIST_PRODUCT_PENDING
+  GET_LIST_PRODUCT_PENDING,
+  GET_BID_HISTORY
 } from "../action/constants";
 
 const initialState = {
+  bidHistory: [],
   products: [],
   productsPending: [],
   product: {}
@@ -27,7 +29,11 @@ export default (state = initialState, action) => {
         ...state,
         product: action.payload
       };
-
+    case GET_BID_HISTORY:
+      return {
+        ...state,
+        bidHistory: action.payload
+      };
     default:
       return state;
   }

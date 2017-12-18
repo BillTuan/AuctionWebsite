@@ -2,7 +2,8 @@ import axios from "axios";
 import {
   GET_LIST_PRODUCT,
   GET_PRODUCT,
-  GET_LIST_PRODUCT_PENDING
+  GET_LIST_PRODUCT_PENDING,
+  GET_BID_HISTORY
 } from "./constants";
 
 export const getListProduct = () => async dispatch => {
@@ -19,9 +20,13 @@ export const getProduct = id => async dispatch => {
   dispatch({ type: GET_PRODUCT, payload: data });
 };
 
-export const getListResultSearch = input => async dispatch => {
-  const { data } = await axios.get(`/api/search?search=${input}`);
-  console.log("====================================");
-  console.log(data);
-  console.log("====================================");
+export const getBidHistory = id => async (dispatch, getState) => {
+  const { headers } = getState().authReducer;
+
+  const { data } = await axios({
+    method: "GET",
+    url: `/api/products/${id}/history`,
+    headers
+  });
+  dispatch({ type: GET_BID_HISTORY, payload: data });
 };

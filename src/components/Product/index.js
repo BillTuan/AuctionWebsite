@@ -152,7 +152,7 @@ class Product extends Component {
 
         {/* Menu information */}
         <Segment>
-          <MenuInfo description={description} />
+          <MenuInfo description={description} id={this.props.match.params.id} />
         </Segment>
       </Container>
     );

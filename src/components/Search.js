@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Search, Image } from "semantic-ui-react";
 import axios from "axios";
-import _ from "lodash";
 import { connect } from "react-redux";
 import * as action from "../action";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import NumberFormat from "./NumberFormat";
 
 const resultRenderer = ({ id, name, img1, bid_price, description }) => (

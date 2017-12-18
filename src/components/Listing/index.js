@@ -103,14 +103,7 @@ class Listing extends Component {
   postProduct = async () => {
     //Product name, Description, List image, Bid time, List category.
     const { headers } = this.props;
-    const {
-      name,
-      description,
-      pictures,
-      bid_time,
-      categories,
-      categoriesOption
-    } = this.state;
+    const { name, description, pictures, bid_time, categories } = this.state;
     //Start time = Now, End time = start time + bid time.
     const start_time = moment().format();
     const end_time = moment(start_time)
@@ -146,7 +139,7 @@ class Listing extends Component {
         });
         this.props.history.push(`/product/${data.id}`);
       } else {
-        const { data } = await axios({
+        await axios({
           url: `/api/products/${this.props.productDetail.id}`,
           method: "PUT",
           headers,
@@ -170,12 +163,12 @@ class Listing extends Component {
     });
   handleOnchange = (e, { value }) => {
     const categories = [];
-    value.map(id => {
+    value.map(id =>
       categories.push({
         id,
         name: this.state.categoriesOption[id].text
-      });
-    });
+      })
+    );
     this.setState({ categories });
   };
   handleBidPriceChange = (e, { value }) => {
