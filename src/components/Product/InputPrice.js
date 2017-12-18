@@ -5,8 +5,8 @@ const InputPrice = props => {
   return (
     <NumericInput
       value={props.value}
-      precision={2}
-      size={6}
+      precision={1}
+      size={8}
       step={props.step}
       mobile={false}
       style={{

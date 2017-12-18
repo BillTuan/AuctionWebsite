@@ -20,13 +20,23 @@ import * as action from "../../action";
 import NumberFormat from "../NumberFormat";
 
 class Product extends Component {
-  state = { images: [] };
+  state = { images: [], currentPrice: 0 };
   componentDidMount() {
     this.props.getProduct(this.props.match.params.id);
+    this.props.getBidHistory(this.props.match.params.id);
   }
 
   componentWillReceiveProps(newProps) {
     this.handleImage(newProps);
+
+    if (newProps.bidHistory.length !== 0) {
+      const currentPrice = newProps.bidHistory.reduce((a, b) =>
+        Math.max(a.currentPrice, b.currentPrice)
+      );
+      this.setState({ currentPrice });
+    } else {
+      this.setState({ currentPrice: newProps.product.bid_price });
+    }
   }
   handleImage(newProps) {
     const images = [];
@@ -61,6 +71,7 @@ class Product extends Component {
     const endTime = moment(end_time).format("MMMM Do YYYY, h:mm:ss a");
     const sellerName = seller === undefined ? "" : seller.name;
     const listCategories = categories === undefined ? [] : categories;
+    const { currentPrice } = this.state;
     return (
       <Container>
         <Segment.Group>
@@ -130,10 +141,10 @@ class Product extends Component {
                     fontSize: 16
                   }}
                 >
-                  Current bid: $551
+                  Current bid: <NumberFormat value={currentPrice} />
                 </Label>
                 <div style={{ margin: 10 }}>
-                  <InputPrice value={551} step={bid_jump} />
+                  <InputPrice value={currentPrice} step={bid_jump} />
                 </div>
 
                 <div style={{ margin: 10 }}>
@@ -152,16 +163,15 @@ class Product extends Component {
 
         {/* Menu information */}
         <Segment>
-          <MenuInfo description={description} id={this.props.match.params.id} />
+          <MenuInfo description={description} />
         </Segment>
       </Container>
     );
   }
 }
 
-const mapStateToProp = ({ productReducer }) => {
-  return {
-    product: productReducer.product
-  };
-};
-export default connect(mapStateToProp, action)(Product);
+const mapStateToProps = ({ productReducer }) => ({
+  product: productReducer.product,
+  bidHistory: productReducer.bidHistory
+});
+export default connect(mapStateToProps, action)(Product);

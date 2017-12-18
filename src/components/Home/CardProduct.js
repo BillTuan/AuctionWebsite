@@ -55,11 +55,6 @@ class CardProduct extends Component {
             Start price: <NumberFormat value={bid_price} />
           </Label>
           <Card.Header>{name}</Card.Header>
-          <Card.Meta>
-            <span className="date">
-              Current price: <NumberFormat value={30} />
-            </span>
-          </Card.Meta>
           <Card.Description>{description.substring(0, 100)}</Card.Description>
         </Card.Content>
         <Card.Content extra>
@@ -88,5 +83,4 @@ class CardProduct extends Component {
     );
   }
 }
-
 export default connect(() => ({}), action)(CardProduct);

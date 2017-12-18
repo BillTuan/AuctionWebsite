@@ -23,15 +23,19 @@ const panes = [
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {props.bidHistory.map(({ Bidder, currentPrice }, index) => (
-              <Table.Row key={index}>
-                <Table.Cell>{Bidder.name}</Table.Cell>
-                <Table.Cell>
-                  <NumberFormat value={currentPrice} />
-                </Table.Cell>
-                <Table.Cell>This is time</Table.Cell>
-              </Table.Row>
-            ))}
+            {props.bidHistory.length === 0 ? (
+              <Table.Cell colSpan="3">No one bid yet</Table.Cell>
+            ) : (
+              props.bidHistory.map(({ Bidder, currentPrice }, index) => (
+                <Table.Row key={index}>
+                  <Table.Cell>{Bidder.name}</Table.Cell>
+                  <Table.Cell>
+                    <NumberFormat value={currentPrice} />
+                  </Table.Cell>
+                  <Table.Cell>This is time</Table.Cell>
+                </Table.Row>
+              ))
+            )}
           </Table.Body>
         </Table>
       </Tab.Pane>
@@ -39,18 +43,13 @@ const panes = [
   }
 ];
 
-class MenuInfo extends Component {
-  componentDidMount() {
-    this.props.getBidHistory(this.props.id);
-  }
-
-  render() {
-    const { description, bidHistory } = this.props;
-    return (
-      <Tab panes={panes} description={description} bidHistory={bidHistory} />
-    );
-  }
-}
+const MenuInfo = props => (
+  <Tab
+    panes={panes}
+    description={props.description}
+    bidHistory={props.bidHistory}
+  />
+);
 
 const mapStateToProps = ({ productReducer }) => ({
   bidHistory: productReducer.bidHistory
