@@ -17,6 +17,15 @@ class Api::AdminController < ApplicationController
       render json: {status: 'ERROR',messages:'User not updated',data: @users.errors},status: :unprocessable_entity
     end
   end
+  def update_status_product
+    @product = Product.find(params[:product_id])
+    @product.status = params[:status]
+    if @product.save
+      render json: @product, status: :ok
+    else
+      render json: {status: 'ERROR',messages:'Product not updated',data: @product.errors},status: :unprocessable_entity
+    end
+  end
   private
   def user_params
     params.permit(:name, :phone,:address,:paycard_number, :status)

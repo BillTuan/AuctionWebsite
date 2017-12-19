@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'api/users/auth'
+  mount_devise_token_auth_for 'Admin', at: 'api/admins/auth'
   #devise_for :users
   namespace :api, defaults: {format: :json} do
     ### phần category và products
@@ -29,10 +30,10 @@ Rails.application.routes.draw do
 
     # lấy tìm sp theo tên
     get 'search', to: 'products#search_by_name'
-    
+
     # gửi feedback đến user và sp
     post 'products/:product_id/feedbacks', to: 'feedbacks#create'
-        
+
     # lấy feedback của user và sp
     get 'products/:product_id/feedbacks', to: 'feedbacks#product_feedbacks'
 
@@ -46,6 +47,11 @@ Rails.application.routes.draw do
     # admin lấy product chưa duyệt
     get 'admin/prodntacpt', to: 'products#get_products_not_accepted'
 
+    # admin cập nhật trạng thái của sản phẩm
+    put 'admin/products/:product_id', to: 'admin#update_status_product'
+
+    # admin lấy ds feedback
+    get 'admin/feedbacks', to: 'feedbacks#index'
     #### PHẦN CỦA USERS ###
 
     # lấy thông tin user bất kỳ
@@ -72,6 +78,8 @@ Rails.application.routes.draw do
     # xem các sp mà mình đã đăng
     get 'users/products', to: 'products#get_products_of_current_user'
 
+    #them san pham dau gia
+   post 'products/auctions', to: 'auction_detail#create'
     #resources :products
     #resources :categories
     #post 'products/search', to: 'products#search'#, as: 'patient'

@@ -1,5 +1,5 @@
 class Api::ProductsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :update, :destroy, :get_products_by_user ]
+  before_action :authenticate_user!, only: [:create, :update, :destroy, :get_products_of_current_user ]
   def index
     # get ds sp đã duyệt và đang đấu giá
     @products =  Product.where(status: 1)

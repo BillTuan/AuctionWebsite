@@ -17,7 +17,7 @@ class Api::FeedbacksController < ApplicationController
     end
 
     def create
-        @feedback = Feedback.new(fromuser_id: current_user.id, comment: params[:comment], product_id: params[:product_id])
+        @feedback = Feedback.new(fromuser_id: current_user.id, comment: params[:comment], product_id: params[:product_id], touser_id: params[:touser_id])
         if @feedback.save
             render json: @feedback, status: :created
         else

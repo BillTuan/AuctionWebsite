@@ -16,6 +16,7 @@ CategoryProduct.delete_all
 WatchedItem.delete_all
 BidSuccess.delete_all
 Feedback.delete_all
+AuctionDetail.delete_all
 
 category1 = Category.create!(name: 'GIA ĐÌNH & VƯỜN')
 category2 = Category.create!(name: 'DU LỊCH & THỂ THAO')
@@ -90,9 +91,15 @@ AuctionDetail.create!(product_id: p8.id, user_id: u3.id, currentPrice: 9000, Max
 BidSuccess.create(product_id: p8.id, bider_id: u3.id, lastPrice: 9000, seller_id: u1.id, status: 0);
 BidSuccess.create(product_id: p7.id, bider_id: u1.id, lastPrice: 8000, seller_id: u2.id, status: 0);
 
-Feedback.create!(fromuser_id: u1.id, product_id: p2.id, comment: "đồ tốt, giao đúng hẹn");
-Feedback.create!(fromuser_id: u2.id, product_id: p3.id, comment: "đồ tốt, giao đúng hẹn");
-Feedback.create!(fromuser_id: u3.id, product_id: p4.id, comment: "đồ tốt, giao đúng hẹn");
-Feedback.create!(fromuser_id: u4.id, product_id: p5.id, comment: "đồ tốt, giao đúng hẹn");
-Feedback.create!(fromuser_id: u5.id, product_id: p5.id, comment: "đồ tốt, giao đúng hẹn");
-Feedback.create!(fromuser_id: u3.id, product_id: p2.id, comment: "đồ tốt, giao đúng hẹn");
+Feedback.create!(fromuser_id: u1.id, product_id: p2.id, touser_id: u2.id, comment: "đồ tốt, giao đúng hẹn");
+Feedback.create!(fromuser_id: u2.id, product_id: p3.id, touser_id: u3.id, comment: "đồ tốt, giao đúng hẹn");
+Feedback.create!(fromuser_id: u3.id, product_id: p4.id, touser_id: u4.id, comment: "đồ tốt, giao đúng hẹn");
+Feedback.create!(fromuser_id: u4.id, product_id: p5.id, touser_id: u5.id, comment: "đồ tốt, giao đúng hẹn");
+Feedback.create!(fromuser_id: u1.id, product_id: p8.id, touser_id: u3.id, comment: "Không thanh toán");
+Feedback.create!(fromuser_id: u2.id, product_id: p7.id, touser_id: u1.id, comment: "Không nhận hàng");
+
+
+Admin.create(email: 'admin1@gmail.com', password: '123456', types: 1)
+Admin.create(email: 'admin1@gmail.com', password: '123456', types: 1)
+Admin.create(email: 'admin1@gmail.com', password: '123456', types: 2)
+Admin.create(email: 'admin1@gmail.com', password: '123456', types: 2)
