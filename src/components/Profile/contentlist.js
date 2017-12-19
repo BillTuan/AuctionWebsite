@@ -152,7 +152,7 @@ const SaleHistory = connect(({ userReducer }) => ({
                 "MMMM Do YYYY, h:mm:ss a"
               );
               return (
-                <Table.Row>
+                <Table.Row key={id}>
                   <Table.Cell>
                     <Image src={img1} size="small" />
                   </Table.Cell>

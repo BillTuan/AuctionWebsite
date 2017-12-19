@@ -3,6 +3,7 @@ import { Tab, Menu, Table } from "semantic-ui-react";
 import { connect } from "react-redux";
 import * as action from "../../action";
 import parser from "react-html-parser";
+import moment from "moment";
 import NumberFormat from "../NumberFormat";
 
 const panes = [
@@ -26,15 +27,22 @@ const panes = [
             {props.bidHistory.length === 0 ? (
               <Table.Cell colSpan="3">No one bid yet</Table.Cell>
             ) : (
-              props.bidHistory.map(({ Bidder, currentPrice }, index) => (
-                <Table.Row key={index}>
-                  <Table.Cell>{Bidder.name}</Table.Cell>
-                  <Table.Cell>
-                    <NumberFormat value={currentPrice} />
-                  </Table.Cell>
-                  <Table.Cell>This is time</Table.Cell>
-                </Table.Row>
-              ))
+              props.bidHistory.map(
+                ({ Bidder, currentPrice, created_at }, index) => {
+                  const createdAt = moment(created_at).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                  );
+                  return (
+                    <Table.Row key={index}>
+                      <Table.Cell>{Bidder.name}</Table.Cell>
+                      <Table.Cell>
+                        <NumberFormat value={currentPrice} />
+                      </Table.Cell>
+                      <Table.Cell>{createdAt}</Table.Cell>
+                    </Table.Row>
+                  );
+                }
+              )
             )}
           </Table.Body>
         </Table>
