@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Tab, Menu, Table } from "semantic-ui-react";
 import { connect } from "react-redux";
 import * as action from "../../action";

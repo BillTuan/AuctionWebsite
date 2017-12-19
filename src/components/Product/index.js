@@ -16,12 +16,24 @@ import InputPrice from "./InputPrice";
 import MenuInfo from "./MenuInfo";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import axios from "axios";
 import * as action from "../../action";
 import NumberFormat from "../NumberFormat";
 
 class Product extends Component {
-  state = { images: [], currentPrice: 0 };
+  state = {
+    images: [],
+    currentPrice: 0,
+    bidPrice: 0,
+    maxPrice: 0,
+    maxPriceBidder: 0
+  };
+
   componentDidMount() {
+    this.updateView();
+  }
+
+  updateView() {
     this.props.getProduct(this.props.match.params.id);
     this.props.getBidHistory(this.props.match.params.id);
   }
@@ -30,14 +42,24 @@ class Product extends Component {
     this.handleImage(newProps);
 
     if (newProps.bidHistory.length !== 0) {
-      const currentPrice = newProps.bidHistory.reduce((a, b) =>
-        Math.max(a.currentPrice, b.currentPrice)
-      );
-      this.setState({ currentPrice });
+      const currentPrice = newProps.bidHistory[0].currentPrice;
+      const maxPrice = newProps.bidHistory[0].MaxPrice;
+      const maxPriceBidder = newProps.bidHistory[0].Bidder.id;
+
+      this.setState({
+        currentPrice,
+        bidPrice: currentPrice,
+        maxPrice,
+        maxPriceBidder
+      });
     } else {
-      this.setState({ currentPrice: newProps.product.bid_price });
+      this.setState({
+        currentPrice: newProps.product.bid_price,
+        bidPrice: newProps.product.bid_price
+      });
     }
   }
+
   handleImage(newProps) {
     const images = [];
     const { img1, img2, img3, img4, img5, img6, img7, img8 } = newProps.product;
@@ -55,6 +77,38 @@ class Product extends Component {
       images: images
     });
   }
+
+  handleChangeBidPrice = bidPrice => {
+    this.setState({ bidPrice });
+  };
+
+  async postBidAuction(user_id, product_id, currentPrice, MaxPrice) {
+    try {
+      await axios.post("/api/products/auctions", {
+        user_id,
+        product_id,
+        currentPrice,
+        MaxPrice
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    this.updateView();
+  }
+
+  handleBid = () => {
+    const { id, bid_jump } = this.props.product;
+    var { currentPrice, bidPrice, maxPrice, maxPriceBidder } = this.state;
+    if (bidPrice < maxPrice) {
+      currentPrice = bidPrice + bid_jump;
+      this.postBidAuction(maxPriceBidder, id, currentPrice, maxPrice);
+    } else {
+      currentPrice = maxPrice + bid_jump;
+      maxPrice = bidPrice;
+      this.postBidAuction(this.props.user.id, id, currentPrice, maxPrice);
+    }
+  };
+
   render() {
     const {
       seller,
@@ -71,7 +125,7 @@ class Product extends Component {
     const endTime = moment(end_time).format("MMMM Do YYYY, h:mm:ss a");
     const sellerName = seller === undefined ? "" : seller.name;
     const listCategories = categories === undefined ? [] : categories;
-    const { currentPrice } = this.state;
+    const { currentPrice, bidPrice } = this.state;
     return (
       <Container>
         <Segment.Group>
@@ -110,13 +164,11 @@ class Product extends Component {
                 >
                   Categories
                 </Label>
-                <p>
-                  {listCategories.map(({ id, name }) => (
-                    <List as="ul" key={id}>
-                      <List.Item as="li">{name}</List.Item>
-                    </List>
-                  ))}
-                </p>
+                {listCategories.map(({ id, name }) => (
+                  <List as="ul" key={id}>
+                    <List.Item as="li">{name}</List.Item>
+                  </List>
+                ))}
                 <Label
                   as="a"
                   color="teal"
@@ -144,11 +196,16 @@ class Product extends Component {
                   Current bid: <NumberFormat value={currentPrice} />
                 </Label>
                 <div style={{ margin: 10 }}>
-                  <InputPrice value={currentPrice} step={bid_jump} />
+                  <InputPrice
+                    value={bidPrice}
+                    step={bid_jump}
+                    minimum={currentPrice + bid_jump}
+                    changeBidPrice={this.handleChangeBidPrice}
+                  />
                 </div>
 
                 <div style={{ margin: 10 }}>
-                  <Button size="large" positive>
+                  <Button size="large" positive onClick={this.handleBid}>
                     Bid
                   </Button>
                 </div>
@@ -170,8 +227,9 @@ class Product extends Component {
   }
 }
 
-const mapStateToProps = ({ productReducer }) => ({
+const mapStateToProps = ({ productReducer, authReducer }) => ({
   product: productReducer.product,
-  bidHistory: productReducer.bidHistory
+  bidHistory: productReducer.bidHistory,
+  user: authReducer.data.data
 });
 export default connect(mapStateToProps, action)(Product);
