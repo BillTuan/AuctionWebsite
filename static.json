@@ -3,10 +3,15 @@
   "routes": {
     "/**": "index.html"
   },
+  "headers": {
+    "/**": {
+      "Strict-Transport-Security": "max-age=7776000"
+    }
+  },
   "https_only": true,
   "proxies": {
-    "/api/": {
-      "origin": "${API_URL}"
+    "/api/*": {
+      "origin": "https://fierce-reef-47982.herokuapp.com"
     }
   }
 }
