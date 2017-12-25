@@ -5,9 +5,9 @@ class ModalForm extends Component {
   state = {
     openModal: false
   };
-  handleCancel() {
+  handleCancel = () => {
     this.setState({ openModal: false });
-  }
+  };
   handleConfirm() {
     this.setState({ openModal: false });
   }
@@ -35,23 +35,11 @@ class ModalForm extends Component {
             confirm={() => this.handleConfirm()}
           />
         </Modal.Content>
-        {/* <Modal.Actions>
-          <Button
-            onClick={() => {
-              this.handleCancel();
-            }}
-          >
-            No
+        <Modal.Actions>
+          <Button primary onClick={this.handleCancel}>
+            Cancel
           </Button>
-          <Button
-            primary
-            onClick={() => {
-              this.handleConfirm();
-            }}
-          >
-            Yes
-          </Button>
-        </Modal.Actions> */}
+        </Modal.Actions>
       </Modal>
     );
   }

@@ -12,6 +12,8 @@ import {
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
+import parser from "react-html-parser";
+
 import ModalForm from "./ModalForm";
 import NumberFormat from "../NumberFormat";
 import * as action from "../../action";
@@ -82,6 +84,7 @@ class Detail extends Component {
               <Form.Input
                 label="Phone"
                 name="phone"
+                type="number"
                 value={phone}
                 onChange={this.handleChange}
               />
@@ -159,7 +162,7 @@ const SaleHistory = connect(({ userReducer }) => ({
                   <Table.Cell>
                     <Link to={`/product/${id}`}>{name}</Link>
                   </Table.Cell>
-                  <Table.Cell>{description.substring(0, 100)}</Table.Cell>
+                  <Table.Cell>{parser(description)}</Table.Cell>
                   <Table.Cell>{endTime}</Table.Cell>
                   <Table.Cell>
                     <NumberFormat value={bid_price} />

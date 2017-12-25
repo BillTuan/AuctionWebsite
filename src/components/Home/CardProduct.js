@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import * as action from "../../action";
 
 import moment from "moment";
+import parser from "react-html-parser";
+
 import Timer from "../Product/Timer";
 import NumberFormat from "../NumberFormat";
 class CardProduct extends Component {
@@ -55,7 +57,9 @@ class CardProduct extends Component {
             Start price: <NumberFormat value={bid_price} />
           </Label>
           <Card.Header>{name}</Card.Header>
-          <Card.Description>{description.substring(0, 100)}</Card.Description>
+          <Card.Description>
+            {parser(description.substring(0, 100))}
+          </Card.Description>
         </Card.Content>
         <Card.Content extra>
           <Link to={linkProduct}>

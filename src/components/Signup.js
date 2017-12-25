@@ -76,6 +76,7 @@ class Signup extends Component {
                   icon="user"
                   iconPosition="left"
                   placeholder="E-mail address"
+                  type="email"
                   value={username}
                   onChange={this.handleChange}
                 />
