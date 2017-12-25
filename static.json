@@ -1,8 +1,4 @@
 {
   "root": "build/",
-  "proxies": {
-    "/api/": {
-      "origin": "https://fierce-reef-47982.herokuapp.com"
-    }
-  }
+  "proxies": "https://fierce-reef-47982.herokuapp.com"
 }
