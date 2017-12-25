@@ -11,7 +11,7 @@
   "https_only": true,
   "proxies": {
     "/api/*": {
-      "origin": "https://fierce-reef-47982.herokuapp.com"
+      "origin": "https://fierce-reef-47982.herokuapp.com/"
     }
   }
 }
