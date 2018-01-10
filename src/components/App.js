@@ -26,32 +26,32 @@ class App extends Component {
     return <Route exact path="/admin" component={Admin} />;
   }
   _renderRouteWithoutAuthRequire() {
-    return (
-      <Switch>
-        <Route
-          exact
-          path="/"
-          render={props => (
-            <div>
-              <Header />
-              <Home {...props} />
-              <Footer />
-            </div>
-          )}
-        />
-        <Route
-          exact
-          path="/category"
-          render={props => (
-            <div>
-              <Header />
-              <ProductCate {...props} />
-              <Footer />
-            </div>
-          )}
-        />
-      </Switch>
-    );
+    return [
+      <Route
+        exact
+        key={1}
+        path="/"
+        render={props => (
+          <div>
+            <Header />
+            <Home {...props} />
+            <Footer />
+          </div>
+        )}
+      />,
+      <Route
+        key={2}
+        exact
+        path="/category"
+        render={props => (
+          <div>
+            <Header />
+            <ProductCate {...props} />
+            <Footer />
+          </div>
+        )}
+      />
+    ];
   }
   _renderRouteWithAuthRequire() {
     return (
