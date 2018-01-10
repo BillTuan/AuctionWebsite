@@ -12,3 +12,4 @@ export const SIGN_OUT = "SIGN_OUT";
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
 export const SET_HEADER = "SET_HEADER";
 export const GET_BID_HISTORY = "GET_BID_HISTORY";
+export const GET_PRODUCT_BY_CATE = "GET_PRODUCT_BY_CATE";

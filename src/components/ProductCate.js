@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import { Container, Grid, Menu } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Menu,
+  Segment,
+  Table,
+  Image
+} from "semantic-ui-react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import * as action from "../action";
 
 class ProductCate extends Component {
@@ -8,20 +16,23 @@ class ProductCate extends Component {
 
   componentDidMount() {
     this.props.getListCategory();
+    this.props.getProductByCate(1);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.categories.length !== 0) {
-      this.setState({ activeItem: nextProps.categories[0].name });
-    }
+    // if (nextProps.categories.length !== 0) {
+    //   this.setState({ activeItem: nextProps.categories[0].name });
+    // }
   }
 
-  handleItemClick = (e, { name }) => {
+  handleItemClick = (name, id) => {
     this.setState({ activeItem: name });
+    this.props.getProductByCate(id);
   };
 
   render() {
     const { activeItem } = this.state;
+    const { productByCate } = this.props;
     return (
       <Container>
         <Grid>
@@ -35,7 +46,7 @@ class ProductCate extends Component {
                       key={id}
                       name={name}
                       active={activeItem === name}
-                      onClick={this.handleItemClick}
+                      onClick={(e, { name }) => this.handleItemClick(name, id)}
                     />
                   ))}
                 </Menu.Menu>
@@ -43,7 +54,44 @@ class ProductCate extends Component {
             </Menu>
           </Grid.Column>
           <Grid.Column width={12}>
-            <h2>Hsdkjnfkdns</h2>
+            <Segment>
+              <Table fixed>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Product name</Table.HeaderCell>
+                    <Table.HeaderCell>Description</Table.HeaderCell>
+                    <Table.HeaderCell>Seller ID</Table.HeaderCell>
+                    <Table.HeaderCell>Image</Table.HeaderCell>
+                    <Table.HeaderCell />
+                  </Table.Row>
+                </Table.Header>
+
+                <Table.Body>
+                  {productByCate.length !== 0 ? (
+                    productByCate.map(
+                      ({ id, name, description, seller, img1 }) => (
+                        <Table.Row key={id}>
+                          <Table.Cell>
+                            <Link to={`/product/${id}`}>{name}</Link>
+                          </Table.Cell>
+                          <Table.Cell>
+                            {description.substring(0, 100)}
+                          </Table.Cell>
+                          <Table.Cell>{seller.name}</Table.Cell>
+                          <Table.Cell>
+                            <Image src={img1} size="small" />
+                          </Table.Cell>
+                        </Table.Row>
+                      )
+                    )
+                  ) : (
+                    <Table.Row>
+                      <Table.Cell colSpan={4}>There is no record</Table.Cell>
+                    </Table.Row>
+                  )}
+                </Table.Body>
+              </Table>
+            </Segment>
           </Grid.Column>
         </Grid>
       </Container>
@@ -52,8 +100,9 @@ class ProductCate extends Component {
 }
 
 export default connect(
-  ({ categoryReducer }) => ({
-    categories: categoryReducer.categories
+  ({ categoryReducer, productReducer }) => ({
+    categories: categoryReducer.categories,
+    productByCate: productReducer.productByCate
   }),
   action
 )(ProductCate);

@@ -1,4 +1,5 @@
 import {
+  GET_PRODUCT_BY_CATE,
   GET_LIST_PRODUCT,
   GET_PRODUCT,
   GET_LIST_PRODUCT_PENDING,
@@ -9,6 +10,7 @@ const initialState = {
   bidHistory: [],
   products: [],
   productsPending: [],
+  productByCate: [],
   product: {}
 };
 
@@ -34,6 +36,8 @@ export default (state = initialState, action) => {
         ...state,
         bidHistory: action.payload
       };
+    case GET_PRODUCT_BY_CATE:
+      return { ...state, productByCate: action.payload };
     default:
       return state;
   }

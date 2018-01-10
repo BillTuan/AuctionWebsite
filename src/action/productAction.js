@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  GET_PRODUCT_BY_CATE,
   GET_LIST_PRODUCT,
   GET_PRODUCT,
   GET_LIST_PRODUCT_PENDING,
@@ -39,4 +40,9 @@ export const likeItem = id => async (dispatch, getState) => {
     headers
   });
   dispatch({ type: "LIKE" });
+};
+
+export const getProductByCate = id => async dispatch => {
+  const { data } = await axios.get(`/api/categories/${id}/products`);
+  dispatch({ type: GET_PRODUCT_BY_CATE, payload: data });
 };

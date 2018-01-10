@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import axios from "axios";
 import moment from "moment";
 import parser from "react-html-parser";
 
@@ -121,10 +122,14 @@ const Credit = () => {
     </Grid.Column>
   );
 };
-const SaleHistory = connect(({ userReducer }) => ({
-  productsPosted: userReducer.productsPosted
-}))(props => {
-  const { productsPosted } = props;
+const SaleHistory = connect(
+  ({ userReducer, authReducer }) => ({
+    productsPosted: userReducer.productsPosted,
+    headers: authReducer.headers
+  }),
+  action
+)(props => {
+  const { productsPosted, headers } = props;
   return (
     <Grid.Column stretched width={12}>
       <Segment>
@@ -172,6 +177,26 @@ const SaleHistory = connect(({ userReducer }) => ({
                   </Table.Cell>
                   <Table.Cell>
                     <ModalForm item={item} />
+                    <Button
+                      color="red"
+                      onClick={async () => {
+                        try {
+                          item.status = 2;
+                          const { data } = await axios({
+                            method: "PUT",
+                            url: `/api/products/${id}`,
+                            headers,
+                            data: item
+                          });
+                          props.getListPostedItem();
+                          console.log("DATA", data);
+                        } catch (error) {
+                          console.log(error);
+                        }
+                      }}
+                    >
+                      Unlist
+                    </Button>
                   </Table.Cell>
                 </Table.Row>
               );
