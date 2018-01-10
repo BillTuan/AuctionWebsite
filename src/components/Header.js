@@ -1,11 +1,22 @@
 import React, { Component } from "react";
-import { Menu, Container, Image, Button, Segment } from "semantic-ui-react";
+import {
+  Menu,
+  Container,
+  Image,
+  Button,
+  Segment,
+  Dropdown
+} from "semantic-ui-react";
 import Search from "./Search";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import * as action from "../action";
 class Header extends Component {
   state = { active: "home" };
+  componentDidMount() {}
+
+  handleChangeCate = (e, { value }) => {};
+
   render() {
     return (
       <Segment stackable="true">
@@ -23,6 +34,9 @@ class Header extends Component {
             </Menu.Item>
             <Menu.Item>
               <Link to="/listing">List product</Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to="/category">Category</Link>
             </Menu.Item>
 
             {this.props.data === null ? (
@@ -70,6 +84,8 @@ class Header extends Component {
 }
 
 export default connect(
-  ({ authReducer }) => ({ data: authReducer.data }),
+  ({ authReducer }) => ({
+    data: authReducer.data
+  }),
   action
 )(withRouter(Header));

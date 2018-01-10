@@ -10,6 +10,7 @@ import Listing from "./Listing";
 import Profile from "./Profile";
 import Signup from "./Signup";
 import Admin from "./Admin";
+import ProductCate from "./ProductCate";
 import NotFound from "./NotFound";
 import * as action from "../action";
 import { connect } from "react-redux";
@@ -26,17 +27,30 @@ class App extends Component {
   }
   _renderRouteWithoutAuthRequire() {
     return (
-      <Route
-        exact
-        path="/"
-        render={props => (
-          <div>
-            <Header />
-            <Home {...props} />
-            <Footer />
-          </div>
-        )}
-      />
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <div>
+              <Header />
+              <Home {...props} />
+              <Footer />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/category"
+          render={props => (
+            <div>
+              <Header />
+              <ProductCate {...props} />
+              <Footer />
+            </div>
+          )}
+        />
+      </Switch>
     );
   }
   _renderRouteWithAuthRequire() {

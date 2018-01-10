@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://fierce-reef-47982.herokuapp.com",
+  "proxy": "http://localhost:8888",
   "dependencies": {
     "@tinymce/tinymce-react": "^2.0.3",
     "axios": "^0.17.1",

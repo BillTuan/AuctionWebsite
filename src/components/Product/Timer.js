@@ -2,15 +2,25 @@ import React, { Component } from "react";
 import moment from "moment";
 
 class Timer extends Component {
-  state = { time: moment.duration(this.props.duration * 1000, "milliseconds") };
+  constructor(props) {
+    super(props);
+    this.state = {
+      time: moment.duration(props.duration * 1000, "milliseconds")
+    };
+  }
 
   componentDidMount() {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({
         time: moment.duration(this.state.time - 1000, "milliseconds")
       });
     }, 1000);
   }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   render() {
     const { time } = this.state;
     return (
