@@ -111,6 +111,7 @@ class Product extends Component {
 
   render() {
     const {
+      id,
       seller,
       name,
       description,
@@ -220,7 +221,7 @@ class Product extends Component {
 
         {/* Menu information */}
         <Segment>
-          <MenuInfo description={description} />
+          <MenuInfo idProduct={id} description={description} />
         </Segment>
       </Container>
     );

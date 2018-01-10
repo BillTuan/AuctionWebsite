@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Table, Icon, Button, Confirm } from "semantic-ui-react";
+import axios from "axios";
 import * as action from "../../action";
 import { connect } from "react-redux";
 class ListUser extends Component {
@@ -7,8 +8,12 @@ class ListUser extends Component {
   handleCancel = () => {
     this.setState({ open: false });
   };
-  handleOK = () => {
-    //do something
+  handleOK = async user => {
+    const { data } = await axios({
+      url: `/api/admin/users/${user.id}`,
+      method: "PUT",
+      data: user
+    });
     this.setState({ open: false });
   };
   componentDidMount() {
@@ -47,7 +52,7 @@ class ListUser extends Component {
                       cancelButton="No"
                       confirmButton="Yes"
                       onCancel={this.handleCancel}
-                      onConfirm={this.handleOK}
+                      onConfirm={() => this.handleOK(user)}
                     />
                   </Table.Cell>
                 </Table.Row>

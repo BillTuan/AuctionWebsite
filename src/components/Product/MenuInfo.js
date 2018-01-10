@@ -1,11 +1,12 @@
 import React from "react";
-import { Tab, Menu, Table } from "semantic-ui-react";
+import { Tab, Menu, Table, Modal, Form, TextArea } from "semantic-ui-react";
 import { connect } from "react-redux";
 import * as action from "../../action";
 import parser from "react-html-parser";
 import moment from "moment";
 import NumberFormat from "../NumberFormat";
-
+import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
+import axios from "axios";
 const panes = [
   {
     menuItem: { key: "details", icon: "info", content: "Description" },
@@ -21,6 +22,7 @@ const panes = [
               <Table.HeaderCell>Bidder</Table.HeaderCell>
               <Table.HeaderCell>Price</Table.HeaderCell>
               <Table.HeaderCell>Time</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -39,6 +41,28 @@ const panes = [
                         <NumberFormat value={currentPrice} />
                       </Table.Cell>
                       <Table.Cell>{createdAt}</Table.Cell>
+                      <Table.Cell>
+                        <Button
+                          primary
+                          onClick={async () => {
+                            const data = {
+                              comment: `Report user ${
+                                Bidder.name
+                              } with product id ${props.idProduct}`,
+                              product_id: props.idProduct,
+                              touser_id: Bidder.id
+                            };
+                            const { data: res } = await axios({
+                              url: `/api/products/${props.idProduct}/feedbacks`,
+                              method: "POST",
+                              data,
+                              headers: props.headers
+                            });
+                          }}
+                        >
+                          Report
+                        </Button>
+                      </Table.Cell>
                     </Table.Row>
                   );
                 }
@@ -53,14 +77,17 @@ const panes = [
 
 const MenuInfo = props => (
   <Tab
+    headers={props.headers}
+    idProduct={props.idProduct}
     panes={panes}
     description={props.description}
     bidHistory={props.bidHistory}
   />
 );
 
-const mapStateToProps = ({ productReducer }) => ({
-  bidHistory: productReducer.bidHistory
+const mapStateToProps = ({ productReducer, authReducer }) => ({
+  bidHistory: productReducer.bidHistory,
+  headers: authReducer.headers
 });
 
 export default connect(mapStateToProps, action)(MenuInfo);
