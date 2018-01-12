@@ -73,7 +73,7 @@ Rails.application.routes.draw do
     get 'users/bids', to: 'bid_success#index'
 
     # xem các sp đã tham gia đấu giá
-    get 'users/auctions', to: 'auction_detail#index'
+    get 'users/:user_id/auctions', to: 'auction_detail#index'
 
     # xem các sp mà mình đã đăng
     get 'users/products', to: 'products#get_products_of_current_user'

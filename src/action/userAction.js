@@ -54,13 +54,13 @@ function checkWin(product, winProduct) {
 }
 
 export const getParticipationProduct = () => async (dispatch, getState) => {
-  const { headers } = getState().authReducer;
-
+  const { data: user, headers } = getState().authReducer;
   const { data } = await axios({
-    url: `/api/users/auctions`,
+    url: `/api/users/${user.data.id}/auctions`,
     method: "GET",
     headers
   });
+  console.log("DATA", data);
   const winBid = await getWinProduct(headers);
   const winProduct = [];
   for (let index = 0; index < winBid.length; index++) {

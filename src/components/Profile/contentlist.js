@@ -108,20 +108,6 @@ const ProfileDetail = connect(({ userReducer, authReducer }) => {
   return { data: authReducer.data.data, status: userReducer.status };
 }, action)(Detail);
 
-const Credit = () => {
-  return (
-    <Grid.Column stretched width={12}>
-      <Segment>
-        <Form>
-          <Form.Input label="Credit" value="3333-3333-3333-3333" />
-          <Button positive floated="right">
-            Update
-          </Button>
-        </Form>
-      </Segment>
-    </Grid.Column>
-  );
-};
 const SaleHistory = connect(
   ({ userReducer, authReducer }) => ({
     productsPosted: userReducer.productsPosted,
@@ -331,7 +317,6 @@ const WatchItem = connect(({ userReducer }) => {
 }, {})(WatchProduct);
 export const ContentList = {
   Profile: <ProfileDetail />,
-  Credit: <Credit />,
   Completed: <Completed />,
   Participating: <Participating />,
   WatchProduct: <WatchItem />,
