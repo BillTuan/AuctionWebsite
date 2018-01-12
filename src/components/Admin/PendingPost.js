@@ -29,7 +29,7 @@ class PendingPost extends Component {
     product.status = 1;
     await axios.put(`/api/admin/products/${product.id}`, product);
     this.props.getListProductPending();
-    this.setState({ openApproveConfirm: false });
+    //this.setState({ openApproveConfirm: false });
   }
   //Deny-------------------------
   denyhandleCancel = () => {
@@ -68,24 +68,24 @@ class PendingPost extends Component {
                   </Table.Cell>
                   <Table.Cell collapsing>
                     {/* Approve confirm */}
-                    <Confirm
+                    {/* <Confirm
                       open={this.state.openApproveConfirm}
                       cancelButton="No"
                       confirmButton="Yes"
                       onCancel={this.approvehandleCancel}
                       onConfirm={() => this.approvehandleConfirm(product)}
-                    />
+                    /> */}
                     <Button
                       positive
                       onClick={() => {
-                        this.showApproveConfirm();
+                        this.approvehandleConfirm(product);
                       }}
                     >
                       Approve
                     </Button>
                     {/* This will show when Approve button clicked */}
                     {/* Deny confirm */}
-                    <Modal
+                    {/* <Modal
                       trigger={
                         <Button
                           negative
@@ -123,7 +123,7 @@ class PendingPost extends Component {
                           Yes
                         </Button>
                       </Modal.Actions>
-                    </Modal>
+                    </Modal> */}
                     {/* This will show when Deny button clicked */}
                   </Table.Cell>
                 </Table.Row>

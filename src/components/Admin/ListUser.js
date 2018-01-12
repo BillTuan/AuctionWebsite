@@ -4,17 +4,18 @@ import axios from "axios";
 import * as action from "../../action";
 import { connect } from "react-redux";
 class ListUser extends Component {
-  state = { open: false };
-  handleCancel = () => {
-    this.setState({ open: false });
-  };
-  handleOK = async user => {
+  state = {};
+  handleCancel = () => {};
+  handleOK = async (id, status) => {
+    console.log("====================================");
+    console.log(id);
+    console.log("====================================");
     const { data } = await axios({
-      url: `/api/admin/users/${user.id}`,
+      url: `/api/admin/users/${id}`,
       method: "PUT",
-      data: user
+      data: { status: status === 3 ? 1 : 3 }
     });
-    this.setState({ open: false });
+    this.props.getListUser();
   };
   componentDidMount() {
     this.props.getListUser();
@@ -33,27 +34,19 @@ class ListUser extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.users.map(user => {
+            {this.props.users.map(({ name, email, id, status }) => {
               return (
                 <Table.Row>
-                  <Table.Cell>{user.name}</Table.Cell>
-                  <Table.Cell>{user.email}</Table.Cell>
+                  <Table.Cell>{name}</Table.Cell>
+                  <Table.Cell>{email}</Table.Cell>
                   <Table.Cell>
                     <Button
-                      negative
-                      onClick={() => {
-                        this.setState({ open: true });
-                      }}
+                      negative={status !== 3}
+                      positive={status === 3}
+                      onClick={() => this.handleOK(id, status)}
                     >
-                      Ban
+                      {status === 3 ? "Un-Ban" : "Ban"}
                     </Button>
-                    <Confirm
-                      open={this.state.open}
-                      cancelButton="No"
-                      confirmButton="Yes"
-                      onCancel={this.handleCancel}
-                      onConfirm={() => this.handleOK(user)}
-                    />
                   </Table.Cell>
                 </Table.Row>
               );
