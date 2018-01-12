@@ -15,6 +15,16 @@ class ListUser extends Component {
       method: "PUT",
       data: { status: status === 3 ? 1 : 3 }
     });
+    const localData = JSON.parse(localStorage.getItem("data"));
+    localStorage.setItem(
+      "data",
+      JSON.stringify({
+        data: {
+          ...localData,
+          status: status === 3 ? 1 : 3
+        }
+      })
+    );
     this.props.getListUser();
   };
   componentDidMount() {

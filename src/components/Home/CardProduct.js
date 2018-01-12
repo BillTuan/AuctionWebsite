@@ -93,6 +93,8 @@ class CardProduct extends Component {
   }
 }
 export default connect(
-  ({ authReducer }) => ({ status: authReducer.data.data.status }),
+  ({ authReducer }) => ({
+    status: authReducer.data !== null ? authReducer.data.data.status : 0
+  }),
   action
 )(CardProduct);
