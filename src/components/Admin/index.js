@@ -23,7 +23,7 @@ class Admin extends Component {
   state = {
     activeItem: "PendingPost",
     currentContent: contents.PendingPost,
-    isLogin: true
+    isLogin: false
   };
   handleItemClick = (e, { name }) =>
     this.setState({ activeItem: name, currentContent: contents[name] });
