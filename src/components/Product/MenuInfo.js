@@ -36,7 +36,7 @@ const panes = [
                   );
                   return (
                     <Table.Row key={index}>
-                      <Table.Cell>{Bidder.name}</Table.Cell>
+                      <Table.Cell>{Bidder.name || Bidder.email}</Table.Cell>
                       <Table.Cell>
                         <NumberFormat value={currentPrice} />
                       </Table.Cell>

@@ -53,9 +53,11 @@ class Product extends Component {
         maxPriceBidder
       });
     } else {
+      console.log("NEXTPROPS", newProps);
       this.setState({
         currentPrice: newProps.product.bid_price,
-        bidPrice: newProps.product.bid_price
+        bidPrice: newProps.product.bid_price,
+        maxPriceBidder: newProps.user.id
       });
     }
   }
@@ -79,6 +81,7 @@ class Product extends Component {
   }
 
   handleChangeBidPrice = bidPrice => {
+    console.log("BID PRICE", bidPrice);
     this.setState({ bidPrice });
   };
 
@@ -99,7 +102,15 @@ class Product extends Component {
   handleBid = () => {
     const { id, bid_jump } = this.props.product;
     var { currentPrice, bidPrice, maxPrice, maxPriceBidder } = this.state;
-    if (bidPrice < maxPrice) {
+    console.log("STATE", this.state);
+    if (maxPrice === 0) {
+      this.postBidAuction(
+        maxPriceBidder,
+        id,
+        currentPrice + bid_jump,
+        bidPrice
+      );
+    } else if (bidPrice < maxPrice) {
       currentPrice = bidPrice + bid_jump;
       this.postBidAuction(maxPriceBidder, id, currentPrice, maxPrice);
     } else {
@@ -127,6 +138,7 @@ class Product extends Component {
     const sellerName = seller === undefined ? "" : seller.name;
     const listCategories = categories === undefined ? [] : categories;
     const { currentPrice, bidPrice } = this.state;
+
     return (
       <Container>
         <Segment.Group>

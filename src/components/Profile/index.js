@@ -33,11 +33,6 @@ class Profile extends Component {
                     onClick={this.handleItemClick}
                   />
                   <Menu.Item
-                    name="Credit"
-                    active={activeItem === "Credit"}
-                    onClick={this.handleItemClick}
-                  />
-                  <Menu.Item
                     name="SaleHistory"
                     active={activeItem === "SaleHistory"}
                     onClick={this.handleItemClick}
