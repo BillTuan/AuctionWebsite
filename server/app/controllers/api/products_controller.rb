@@ -154,6 +154,6 @@ class Api::ProductsController < ApplicationController
 
   private
   def product_params
-    params.permit(:seller_id, :name, :img1,:img2,:img3,:img4,:img5,:img6,:img7,:img8, :bid_price, :bid_jump, :buy_price, :description, :start_time, :end_time)
+    params.permit(:seller_id, :name, :img1,:img2,:img3,:img4,:img5,:img6,:img7,:img8, :bid_price, :bid_jump, :buy_price, :description, :start_time, :end_time, :status)
   end
 end
