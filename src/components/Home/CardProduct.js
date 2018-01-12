@@ -62,8 +62,13 @@ class CardProduct extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Link to={linkProduct}>
+          <Link to={this.props.status !== 3 ? linkProduct : "#"}>
             <Button
+              onClick={() => {
+                this.props.status === 3
+                  ? alert("Your account is banned")
+                  : null;
+              }}
               color={this.state.buttonColor}
               onMouseEnter={() => this.setState({ buttonColor: "green" })}
               onMouseLeave={() =>
@@ -87,4 +92,7 @@ class CardProduct extends Component {
     );
   }
 }
-export default connect(() => ({}), action)(CardProduct);
+export default connect(
+  ({ authReducer }) => ({ status: authReducer.data.data.status }),
+  action
+)(CardProduct);
